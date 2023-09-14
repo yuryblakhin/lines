@@ -1,0 +1,63 @@
+version: '3.3'
+services:
+  nginx:
+    container_name: ${PROJECT}-nginx
+    image: nginx:1.23.3-alpine
+    working_dir: /application
+    networks:
+      - internal
+    ports:
+      - '${PROJECT_PORT}:80'
+    volumes:
+      - ./:/application
+      - ./docker/nginx:/etc/nginx/conf.d
+  php:
+    container_name: ${PROJECT}-php
+    build: docker/php
+    working_dir: /application
+    volumes:
+      - ./:/application
+      - ./docker/php/php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini
+    networks:
+      - internal
+    depends_on:
+    - redis
+  database:
+    container_name: ${PROJECT}-database
+    build:
+      context: docker/database
+    ports:
+      - '${DATABASE_PORT}:3306'
+    networks:
+      - internal
+    volumes:
+      - ./docker/data/database:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: ${DATABASE_NAME}
+      MYSQL_USER: ${DATABASE_USER}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+  redis:
+    image: redis:latest
+    container_name: ${PROJECT}-redis
+    ports:
+      - ${REDIS_PORT}:6379
+    networks:
+      - internal
+  adminer:
+    image: dockette/adminer:full
+    container_name: ${PROJECT}-adminer
+    links:
+      - database:database
+    ports:
+      - '${ADMINER_PORT}:80'
+    environment:
+      UPLOAD: 1024M
+    networks:
+      - internal
+volumes:
+  bd-data:
+    driver: local
+networks:
+  internal:
+    driver: bridge
