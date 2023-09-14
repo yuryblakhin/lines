@@ -1,18 +1,18 @@
 version: '3.3'
 services:
   nginx:
-    container_name: ${PROJECT}-nginx
+    container_name: ${APP_NAME}-nginx
     image: nginx:1.23.3-alpine
     working_dir: /application
     networks:
       - internal
     ports:
-      - '${PROJECT_PORT}:80'
+      - '${APP_PORT}:80'
     volumes:
       - ./:/application
       - ./docker/nginx:/etc/nginx/conf.d
   php:
-    container_name: ${PROJECT}-php
+    container_name: ${APP_NAME}-php
     build: docker/php
     working_dir: /application
     volumes:
@@ -23,30 +23,30 @@ services:
     depends_on:
     - redis
   database:
-    container_name: ${PROJECT}-database
+    container_name: ${APP_NAME}-database
     build:
       context: docker/database
     ports:
-      - '${DATABASE_PORT}:3306'
+      - '${DB_PORT}:3306'
     networks:
       - internal
     volumes:
       - ./docker/data/database:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: ${DATABASE_NAME}
-      MYSQL_USER: ${DATABASE_USER}
-      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
   redis:
     image: redis:latest
-    container_name: ${PROJECT}-redis
+    container_name: ${APP_NAME}-redis
     ports:
       - ${REDIS_PORT}:6379
     networks:
       - internal
   adminer:
     image: dockette/adminer:full
-    container_name: ${PROJECT}-adminer
+    container_name: ${APP_NAME}-adminer
     links:
       - database:database
     ports:
