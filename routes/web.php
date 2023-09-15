@@ -1,26 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/', function () {
-    return view('welcome');
+// Auth
+Route::prefix('auth')->name('auth.')->group(function () {
+    Route::get('login', [LoginController::class, 'showLoginForm'])->name('index');
+    Route::post('login', [LoginController::class, 'login'])->name('login');
+    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+    Route::prefix('password')->name('password.')->group(function () {
+        Route::get('reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('index');
+        Route::post('email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('email');
+        Route::get('reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('reset');
+        Route::post('reset', [ResetPasswordController::class, 'reset'])->name('update');
+    });
 });
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
