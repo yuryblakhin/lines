@@ -22,7 +22,7 @@ class UserDemoSeeder extends Seeder
             [
                 'first_name' => 'Ivan',
                 'last_name' => 'Ivanov',
-                'email' => 'ivan.ivanovn@test.com',
+                'email' => 'ivan.ivanov@test.com',
                 'password' => 'password',
             ],
         ];
