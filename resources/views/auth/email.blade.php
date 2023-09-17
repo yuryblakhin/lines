@@ -3,7 +3,7 @@
 @section('content')
     <div class="container container-tight py-4">
         <div class="text-center mb-4">
-            <a href="{{ route('home', [], false) }}" class="navbar-brand navbar-brand-autodark">
+            <a href="{{ route('dashboard.home.index', [], false) }}" class="navbar-brand navbar-brand-autodark">
                 {{ config('app.name') }}
             </a>
         </div>
@@ -11,7 +11,7 @@
             @csrf
             <div class="card-body">
                 <div class="mb-3">
-                    <h2 class="card-title text-center">{{ __('Reset Password') }}</h2>
+                    <h2 class="card-title text-center">{{ $title }}</h2>
                 </div>
                 @if (session('status'))
                     <div class="alert alert-success" role="alert">

@@ -21,12 +21,22 @@ class ResetPasswordController extends Controller
      */
     protected string $redirectTo = RouteServiceProvider::HOME;
 
+    /**
+     * Отображает форму сброса пароля.
+     *
+     * @param Request $request Запрос, содержащий параметры маршрута и данные запроса.
+     * @return View Представление для отображения формы сброса пароля.
+     */
     public function showResetForm(Request $request): View
     {
-        $token = $request->route()->parameter('token');
+        $this->setTemplate('auth.reset');
+        $this->setTitle('Reset Password');
+        $this->setDescription('Reset Password');
+        $this->setTemplateData([
+            'token' =>  $request->route()->parameter('token'),
+            'email' => $request->email,
+        ]);
 
-        return view('auth.reset')->with(
-            ['token' => $token, 'email' => $request->email]
-        );
+        return $this->renderTemplate();
     }
 }

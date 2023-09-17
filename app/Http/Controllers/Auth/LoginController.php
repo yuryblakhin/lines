@@ -30,8 +30,17 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    /**
+     * Отображает форму входа в систему.
+     *
+     * @return View Представление для отображения формы входа.
+     */
     public function showLoginForm(): View
     {
-        return view('auth.login');
+        $this->setTemplate('auth.login');
+        $this->setTitle('Login');
+        $this->setDescription('Login');
+
+        return $this->renderTemplate();
     }
 }
