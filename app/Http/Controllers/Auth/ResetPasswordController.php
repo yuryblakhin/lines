@@ -30,8 +30,8 @@ class ResetPasswordController extends Controller
     public function showResetForm(Request $request): View
     {
         $this->setTemplate('auth.reset');
-        $this->setTitle('Reset Password');
-        $this->setDescription('Reset Password');
+        $this->setTitle(__('messages.auth.reset_password.title'));
+        $this->setDescription(__('messages.auth.reset_password.description'));
         $this->setTemplateData([
             'token' =>  $request->route()->parameter('token'),
             'email' => $request->email,

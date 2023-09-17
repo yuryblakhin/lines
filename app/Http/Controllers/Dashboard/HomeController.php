@@ -17,8 +17,8 @@ class HomeController extends Controller
     public function index(): View
     {
         $this->setTemplate('dashboard.home.index');
-        $this->setTitle('Dashboard');
-        $this->setDescription('Default title');
+        $this->setTitle(__('messages.dashboard.home.index.title'));
+        $this->setDescription(__('messages.dashboard.home.index.description'));
 
         return $this->renderTemplate();
     }

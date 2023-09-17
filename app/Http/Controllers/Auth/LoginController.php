@@ -38,8 +38,8 @@ class LoginController extends Controller
     public function showLoginForm(): View
     {
         $this->setTemplate('auth.login');
-        $this->setTitle('Login');
-        $this->setDescription('Login');
+        $this->setTitle(__('messages.auth.login.title'));
+        $this->setDescription(__('messages.auth.login.description'));
 
         return $this->renderTemplate();
     }

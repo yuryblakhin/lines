@@ -20,8 +20,8 @@ class ForgotPasswordController extends Controller
     public function showLinkRequestForm(): View
     {
         $this->setTemplate('auth.email');
-        $this->setTitle('Reset Password');
-        $this->setDescription('Reset Password');
+        $this->setTitle(__('messages.auth.forgot_password.title'));
+        $this->setDescription(__('messages.auth.forgot_password.description'));
 
         return $this->renderTemplate();
     }
