@@ -11,12 +11,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Auth
-Route::prefix('auth')->name('auth.')->group(function () {
-    Route::get('login', [LoginController::class, 'showLoginForm'])->name('index');
-    Route::post('login', [LoginController::class, 'login'])->name('login');
-    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
-
-    Route::prefix('password')->name('password.')->group(function () {
+Route::prefix('auth')->group(function () {
+    Route::name('auth.')->group(function () {
+        Route::get('login', [LoginController::class, 'showLoginForm'])->name('index');
+        Route::post('login', [LoginController::class, 'login'])->name('login');
+        Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+    });
+    Route::name('password.')->group(function () {
         Route::get('reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('index');
         Route::post('email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('email');
         Route::get('reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('reset');
