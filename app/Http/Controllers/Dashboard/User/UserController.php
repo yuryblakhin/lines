@@ -68,8 +68,8 @@ class UserController extends Controller
     {
         try {
             $this->setTemplate('dashboard.user.create');
-            $this->setTitle(__('messages.dashboard.user.index.title'));
-            $this->setDescription(__('messages.dashboard.user.index.description'));
+            $this->setTitle(__('messages.dashboard.user.create.title'));
+            $this->setDescription(__('messages.dashboard.user.create.description'));
 
             return $this->renderTemplate();
         } catch (Throwable $exception) {
@@ -117,8 +117,8 @@ class UserController extends Controller
             $user = $this->userRepository->findById($userId);
 
             $this->setTemplate('dashboard.user.edit');
-            $this->setTitle(__('messages.dashboard.user.index.title'));
-            $this->setDescription(__('messages.dashboard.user.index.description'));
+            $this->setTitle(__('messages.dashboard.user.edit.title'));
+            $this->setDescription(__('messages.dashboard.user.edit.description'));
             $this->setTemplateData(['user' => new UserResource($user)]);
 
             return $this->renderTemplate();

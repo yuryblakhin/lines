@@ -25,11 +25,19 @@ return [
         ],
         'user' => [
             'index' => [
-                'title' => 'User Dashboard',
-                'description' => 'Welcome to the user dashboard page',
+                'title' => 'Users',
+                'description' => 'Manage your users',
+            ],
+            'create' => [
+                'title' => 'New User',
+                'description' => 'Manage your users',
             ],
             'store' => [
                 'redirect' => 'User data has been successfully created!'
+            ],
+            'edit' => [
+                'title' => 'Edit User',
+                'description' => 'Manage your users',
             ],
             'update' => [
                 'redirect' => 'User data has been successfully updated!'
