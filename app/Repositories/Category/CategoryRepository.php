@@ -41,6 +41,10 @@ class CategoryRepository implements CategoryRepositoryContract
     public function updateCategory(Category $category, array $data): object
     {
         try {
+            if (isset($data['parent_id']) && $data['parent_id'] !== $category->parent_id) {
+                $category->appendToNode(Category::find($data['parent_id']))->save();
+            }
+
             $category->update($data);
 
             return $category;
