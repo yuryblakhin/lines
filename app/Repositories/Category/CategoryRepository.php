@@ -9,6 +9,7 @@ use App\Enums\SortDirectionEnum;
 use App\Models\Category;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\DB;
 use Throwable;
 
 class CategoryRepository implements CategoryRepositoryContract
@@ -32,8 +33,28 @@ class CategoryRepository implements CategoryRepositoryContract
     public function storeCategory(array $data): object
     {
         try {
-            return Category::query()->create($data);
+            DB::beginTransaction();
+
+            $category = new Category($data);
+
+            if (isset($data['parent_id'])) {
+                $parentCategory = Category::find($data['parent_id']);
+
+                if (!$parentCategory) {
+                    throw new ModelNotFoundException();
+                }
+
+                $category->appendToNode($parentCategory);
+            }
+
+            $category->save();
+
+            DB::commit();
+
+            return $category;
         } catch (Throwable $exception) {
+            DB::rollback();
+
             throw new Exception($exception->getMessage());
         }
     }
@@ -41,14 +62,26 @@ class CategoryRepository implements CategoryRepositoryContract
     public function updateCategory(Category $category, array $data): object
     {
         try {
+            DB::beginTransaction();
+
             if (isset($data['parent_id']) && $data['parent_id'] !== $category->parent_id) {
-                $category->appendToNode(Category::find($data['parent_id']))->save();
+                $parentCategory = Category::find($data['parent_id']);
+
+                if (!$parentCategory) {
+                    throw new ModelNotFoundException();
+                }
+
+                $category->appendToNode($parentCategory)->save();
             }
 
             $category->update($data);
 
+            DB::commit();
+
             return $category;
         } catch (Throwable $exception) {
+            DB::rollback();
+
             throw new Exception($exception->getMessage());
         }
     }
@@ -56,8 +89,14 @@ class CategoryRepository implements CategoryRepositoryContract
     public function destroyCategory(Category $category): void
     {
         try {
+            DB::beginTransaction();
+
             $category->delete();
+
+            DB::commit();
         } catch (Throwable $exception) {
+            DB::rollback();
+
             throw new Exception($exception->getMessage());
         }
     }
