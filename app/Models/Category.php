@@ -21,11 +21,11 @@ class Category extends Model
 
     public function getLftName(): string
     {
-        return 'lft';
+        return 'left';
     }
 
     public function getRgtName(): string
     {
-        return 'rgt';
+        return 'right';
     }
 }

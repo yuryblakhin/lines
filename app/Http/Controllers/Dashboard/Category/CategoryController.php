@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Dashboard\Category;
 
-use App\Contracts\User\UserRepositoryContract;
+use App\Contracts\Category\CategoryRepositoryContract;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\UserStoreRequest;
-use App\Http\Requests\User\UserUpdateRequest;
-use App\Http\Resources\User\UserCollection;
-use App\Http\Resources\User\UserResource;
+use App\Http\Requests\Category\CategoryStoreRequest;
+use App\Http\Requests\Category\CategoryUpdateRequest;
+use App\Http\Resources\Category\CategoryCollection;
+use App\Http\Resources\Category\CategoryResource;
+use App\Models\Category;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,20 +20,20 @@ use Throwable;
 
 class CategoryController extends Controller
 {
-    protected UserRepositoryContract $userRepository;
+    protected CategoryRepositoryContract $categoryRepository;
 
     public function __construct(
-        UserRepositoryContract $userRepository,
+        CategoryRepositoryContract $categoryRepository,
     ) {
-        $this->userRepository = $userRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
-     * Отображает страницу управления пользователями.
+     * Отображает страницу управления категориями.
      *
      * @param Request $request Запрос, содержащий параметры и данные запроса.
      *
-     * @return View|Exception Представление для отображения страницы управления пользователями
+     * @return View|Exception Представление для отображения страницы управления категориями
      * или исключение, если возникла ошибка.
      *
      * @throws Exception Если возникла ошибка при выполнении операции.
@@ -41,12 +42,12 @@ class CategoryController extends Controller
     {
         try {
             $data = $request->all();
-            $users = $this->userRepository->getAllUsers($data);
+            $categories = $this->categoryRepository->getAllCategories($data);
 
-            $this->setTemplate('dashboard.user.index');
-            $this->setTitle(__('messages.dashboard.user.index.title'));
-            $this->setDescription(__('messages.dashboard.user.index.description'));
-            $this->setTemplateData(['users' => new UserCollection($users)]);
+            $this->setTemplate('dashboard.category.index');
+            $this->setTitle(__('messages.dashboard.category.index.title'));
+            $this->setDescription(__('messages.dashboard.category.index.description'));
+            $this->setTemplateData(['categories' => new CategoryCollection($categories)]);
 
             return $this->renderTemplate();
         } catch (Throwable $exception) {
@@ -55,11 +56,11 @@ class CategoryController extends Controller
     }
 
     /**
-     * Отображает форму создания нового пользователя.
+     * Отображает форму создания новой категории.
      *
      * @param Request $request Запрос.
      *
-     * @return View|Exception Представление для отображения формы создания пользователя
+     * @return View|Exception Представление для отображения формы создания категории
      * или исключение, если возникла ошибка.
      *
      * @throws Exception Если возникла ошибка при выполнении операции.
@@ -67,9 +68,12 @@ class CategoryController extends Controller
     public function create(Request $request): View|Exception
     {
         try {
-            $this->setTemplate('dashboard.user.create');
-            $this->setTitle(__('messages.dashboard.user.create.title'));
-            $this->setDescription(__('messages.dashboard.user.create.description'));
+            $categories = Category::all();
+
+            $this->setTemplate('dashboard.category.create');
+            $this->setTitle(__('messages.dashboard.category.create.title'));
+            $this->setDescription(__('messages.dashboard.category.create.description'));
+            $this->setTemplateData(['categories' => $categories]);
 
             return $this->renderTemplate();
         } catch (Throwable $exception) {
@@ -78,48 +82,52 @@ class CategoryController extends Controller
     }
 
     /**
-     * Сохраняет нового пользователя и перенаправляет на страницу управления пользователями.
+     * Сохраняет новую категорию и перенаправляет на страницу управления категориями.
      *
-     * @param UserStoreRequest $request Запрос с валидированными данными для создания пользователя.
+     * @param CategoryStoreRequest $request Запрос с валидированными данными для создания категории.
      *
-     * @return RedirectResponse|Exception Перенаправление на страницу управления пользователями
-     * с сообщением об успешном создании пользователя или исключение, если возникла ошибка.
+     * @return RedirectResponse|Exception Перенаправление на страницу управления категориями
+     * с сообщением об успешном создании категории или исключение, если возникла ошибка.
      *
      * @throws Exception Если возникла ошибка при выполнении операции.
      */
-    public function store(UserStoreRequest $request): RedirectResponse|Exception
+    public function store(CategoryStoreRequest $request): RedirectResponse|Exception
     {
         try {
             $data = $request->validated();
-            $this->userRepository->storeUser($data);
+            $this->categoryRepository->storeCategory($data);
 
-            return Redirect::route('dashboard.user.index')
-                ->with('success', __('messages.dashboard.user.store.redirect'));
+            return Redirect::route('dashboard.category.index')
+                ->with('success', __('messages.dashboard.category.store.redirect'));
         } catch (Throwable $exception) {
             throw new Exception($exception->getMessage(), $exception->getCode(), $exception);
         }
     }
 
     /**
-     * Отображает страницу с информацией о пользователе.
+     * Отображает страницу с информацией о категории.
      *
      * @param Request $request Запрос, содержащий параметры и данные запроса.
-     * @param int $userId Идентификатор пользователя или объект пользователя.
+     * @param int $categoryId Идентификатор категории или объект категории.
      *
-     * @return View|Exception Представление для отображения страницы с информацией о пользователе
+     * @return View|Exception Представление для отображения страницы с информацией о категории
      * или исключение, если возникла ошибка.
      *
      * @throws Exception Если возникла ошибка при выполнении операции.
      */
-    public function edit(Request $request, int $userId): View|Exception
+    public function edit(Request $request, int $categoryId): View|Exception
     {
         try {
-            $user = $this->userRepository->findById($userId);
+            $category = $this->categoryRepository->findById($categoryId);
+            $categories = Category::where('id', '!=', $category->id)->get();
 
-            $this->setTemplate('dashboard.user.edit');
-            $this->setTitle(__('messages.dashboard.user.edit.title'));
-            $this->setDescription(__('messages.dashboard.user.edit.description'));
-            $this->setTemplateData(['user' => new UserResource($user)]);
+            $this->setTemplate('dashboard.category.edit');
+            $this->setTitle(__('messages.dashboard.category.edit.title'));
+            $this->setDescription(__('messages.dashboard.category.edit.description'));
+            $this->setTemplateData([
+                'category' => new CategoryResource($category),
+                'categories' => $categories,
+            ]);
 
             return $this->renderTemplate();
         } catch (Throwable $exception) {
@@ -128,49 +136,49 @@ class CategoryController extends Controller
     }
 
     /**
-     * Обновляет информацию о пользователе.
+     * Обновляет информацию о категории.
      *
-     * @param UserUpdateRequest $request Запрос с валидированными данными.
-     * @param int $userId Идентификатор пользователя, который будет обновлен.
+     * @param CategoryUpdateRequest $request Запрос с валидированными данными.
+     * @param int $categoryId Идентификатор категории, которая будет обновлена.
      *
-     * @return RedirectResponse|Exception Перенаправление на страницу управления пользователями
+     * @return RedirectResponse|Exception Перенаправление на страницу управления категориями
      * с сообщением об успешном обновлении или исключение, если возникла ошибка.
      *
      * @throws Exception Если возникла ошибка при выполнении операции.
      */
-    public function update(UserUpdateRequest $request, int $userId): RedirectResponse|Exception
+    public function update(CategoryUpdateRequest $request, int $categoryId): RedirectResponse|Exception
     {
         try {
             $data = $request->validated();
-            $user = $this->userRepository->findById($userId);
-            $this->userRepository->updateUser($user, $data);
+            $category = $this->categoryRepository->findById($categoryId);
+            $this->categoryRepository->updateCategory($category, $data);
 
-            return Redirect::route('dashboard.user.index')
-                ->with('success', __('messages.dashboard.user.update.redirect'));
+            return Redirect::route('dashboard.category.index')
+                ->with('success', __('messages.dashboard.category.update.redirect'));
         } catch (Throwable $exception) {
             throw new Exception($exception->getMessage(), $exception->getCode(), $exception);
         }
     }
 
     /**
-     * Удаляет пользователя.
+     * Удаляет категорию.
      *
      * @param Request $request Запрос.
-     * @param int $userId Идентификатор пользователя, который будет удален.
+     * @param int $categoryId Идентификатор категории, которая будет удалена.
      *
-     * @return RedirectResponse|Exception Перенаправление на страницу управления пользователями
-     * с сообщением об успешном удалении пользователя или исключение, если возникла ошибка.
+     * @return RedirectResponse|Exception Перенаправление на страницу управления категориями
+     * с сообщением об успешном удалении категории или исключение, если возникла ошибка.
      *
      * @throws Exception Если возникла ошибка при выполнении операции.
      */
-    public function destroy(Request $request, int $userId): RedirectResponse|Exception
+    public function destroy(Request $request, int $categoryId): RedirectResponse|Exception
     {
         try {
-            $user = $this->userRepository->findById($userId);
-            $this->userRepository->destroyUser($user);
+            $category = $this->categoryRepository->findById($categoryId);
+            $this->categoryRepository->destroyCategory($category);
 
-            return Redirect::route('dashboard.user.index')
-                ->with('success', __('messages.dashboard.user.destroy.redirect'));
+            return Redirect::route('dashboard.category.index')
+                ->with('success', __('messages.dashboard.category.destroy.redirect'));
         } catch (Throwable $exception) {
             throw new Exception($exception->getMessage(), $exception->getCode(), $exception);
         }

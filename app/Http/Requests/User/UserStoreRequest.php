@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\User;
 
-use App\Rules\ModelExistsRule;
 use App\Rules\NullableStringRule;
 use App\Rules\User\UserPasswordRule;
+use App\Rules\User\UserUniqueEmailRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserStoreRequest extends FormRequest
@@ -27,13 +27,7 @@ class UserStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => [
-                'required',
-                'min:1',
-                'max:60',
-                'email',
-                new ModelExistsRule(table: 'users', column: 'email'),
-            ],
+            'email' => ['required', 'min:1', 'max:60', 'email', new UserUniqueEmailRule()],
             'password' => ['required', 'min:8', 'max:50', new UserPasswordRule()],
             'first_name' => [new NullableStringRule(), 'max:60'],
             'last_name' => [new NullableStringRule(), 'max:60'],

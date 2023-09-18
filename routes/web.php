@@ -36,9 +36,9 @@ Route::middleware('auth')->name('dashboard.')->group(function () {
         Route::get('/', [CategoryController::class, 'index'])->name('index');
         Route::get('/create', [CategoryController::class, 'create'])->name('create');
         Route::post('/', [CategoryController::class, 'store'])->name('store');
-        Route::get('/{user}/edit', [CategoryController::class, 'edit'])->name('edit')->whereNumber('category');
-        Route::put('/{user}', [CategoryController::class, 'update'])->name('update')->whereNumber('category');
-        Route::delete('/{user}', [CategoryController::class, 'destroy'])->name('destroy');
+        Route::get('/{category}/edit', [CategoryController::class, 'edit'])->name('edit')->whereNumber('category');
+        Route::put('/{category}', [CategoryController::class, 'update'])->name('update')->whereNumber('category');
+        Route::delete('/{category}', [CategoryController::class, 'destroy'])->name('destroy');
     });
 
     // Users

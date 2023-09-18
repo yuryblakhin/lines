@@ -45,6 +45,29 @@ return [
             'destroy' => [
                 'redirect' => 'User data has been successfully deleted!'
             ]
+        ],
+        'category' => [
+            'index' => [
+                'title' => 'Categories',
+                'description' => 'Manage your categories',
+            ],
+            'create' => [
+                'title' => 'New Category',
+                'description' => 'Manage your categories',
+            ],
+            'store' => [
+                'redirect' => 'Category data has been successfully created!'
+            ],
+            'edit' => [
+                'title' => 'Edit Category',
+                'description' => 'Manage your categories',
+            ],
+            'update' => [
+                'redirect' => 'Category data has been successfully updated!'
+            ],
+            'destroy' => [
+                'redirect' => 'Category data has been successfully deleted!'
+            ]
         ]
     ]
 ];

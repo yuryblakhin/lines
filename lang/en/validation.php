@@ -155,8 +155,9 @@ return [
     'url' => 'The :attribute field must be a valid URL.',
     'ulid' => 'The :attribute field must be a valid ULID.',
     'uuid' => 'The :attribute field must be a valid UUID.',
-    'nullable_integer' => 'The value must be an integer or null.',
-    'nullable_string' => 'The value must be a string or null.',
+    'nullable_integer' => 'The :attribute must be an integer or null.',
+    'nullable_string' => 'The :attribute must be a string or null.',
+    'not_parent' => 'The :attribute could not be the parent element.',
 
     /*
     |--------------------------------------------------------------------------

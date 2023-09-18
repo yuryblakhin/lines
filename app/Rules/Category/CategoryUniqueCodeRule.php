@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Rules;
+namespace App\Rules\Category;
 
+use App\Models\Category;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Contracts\Validation\ValidatorAwareRule;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Validator;
 
-class ModelExistsRule implements ValidationRule, ValidatorAwareRule
+class CategoryUniqueCodeRule implements ValidationRule, ValidatorAwareRule
 {
     /**
      * Экземпляр Validator.
@@ -20,30 +20,21 @@ class ModelExistsRule implements ValidationRule, ValidatorAwareRule
     protected Validator $validator;
 
     /**
-     * Имя таблицы для проверки на существование.
+     * ID, который нужно игнорировать во время проверки наличия.
      *
-     * @var string
+     * @var mixed|null
      */
-    protected string $table;
-
-    /**
-     * Имя столбца для проверки на существование.
-     *
-     * @var string
-     */
-    protected string $column;
+    protected mixed $existId;
 
     /**
      * Создает новый экземпляр правила валидации.
      *
-     * @param string $table Имя таблицы для проверки на существование.
-     * @param string $column Имя столбца для проверки на существование.
+     * @param mixed|null $existId ID, который нужно игнорировать во время проверки наличия.
      * @return void
      */
-    public function __construct(string $table, string $column)
+    public function __construct(mixed $existId = null)
     {
-        $this->table = $table;
-        $this->column = $column;
+        $this->existId = $existId;
     }
 
     /**
@@ -56,15 +47,17 @@ class ModelExistsRule implements ValidationRule, ValidatorAwareRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if ($this->validator->getMessageBag()->has($attribute) || is_null($value)) {
+        if ($this->validator->getMessageBag()->has($attribute)) {
             return;
         }
 
-        $query = DB::table($this->table)
-            ->where($this->column, $value);
+        $query = Category::whereRaw('LOWER(code) = ?', [mb_strtolower((string) $value)])
+            ->when($this->existId, function ($query) {
+                return $query->where('id', '<>', $this->existId);
+            });
 
-        if ($query->doesntExist()) {
-            $fail(__('validation.exists'));
+        if ($query->exists()) {
+            $fail(__('validation.unique'));
         }
     }
 

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\User;
 
-use App\Rules\ModelExistsRule;
 use App\Rules\NullableStringRule;
+use App\Rules\User\UserUniqueEmailRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserUpdateRequest extends FormRequest
@@ -26,11 +26,7 @@ class UserUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['sometimes',
-                'min:1',
-                'max:60',
-                'email',
-                new ModelExistsRule(table: 'users', column: 'email', existId: $this->route('user')),
+            'email' => ['sometimes', 'min:1', 'max:60', 'email', new UserUniqueEmailRule(existId: $this->route('user')),
             ],
             'first_name' => ['sometimes', new NullableStringRule(), 'max:60'],
             'last_name' => ['sometimes', new NullableStringRule(), 'max:60'],

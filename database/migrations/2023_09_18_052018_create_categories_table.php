@@ -15,11 +15,11 @@ return new class extends Migration {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('code');
-            $table->text('description');
+            $table->string('code')->unique();
+            $table->text('description')->nullable();
             $table->unsignedBigInteger('parent_id')->nullable();
-            $table->unsignedInteger('lft')->nullable();
-            $table->unsignedInteger('rgt')->nullable();
+            $table->unsignedInteger('left')->nullable();
+            $table->unsignedInteger('right')->nullable();
             $table->timestamps();
         });
     }
