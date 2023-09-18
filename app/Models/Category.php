@@ -28,4 +28,6 @@ class Category extends Model
     {
         return 'right';
     }
+
+    public static array $sortable = ['id', 'name', 'code', 'created_at', 'updated_at'];
 }
