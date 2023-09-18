@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 use App\Contracts\User\UserRepositoryContract;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class UserDemoSeeder extends Seeder
@@ -28,7 +29,7 @@ class UserDemoSeeder extends Seeder
         ];
 
         foreach ($users as $user) {
-            if (!$this->userRepository->findByEmail($user['email'])) {
+            if (!User::where('email', $user['email'])->first()) {
                 $this->userRepository->storeUser($user);
             }
         }
