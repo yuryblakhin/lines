@@ -3,9 +3,8 @@
 @section('content')
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header"><h3 class="card-title">Edit User</h3></div>
             <div class="card-body">
-                <form method="POST" action="{{ route('dashboard.user.update', ['user' => $user->id], false) }}">
+                <form method="POST" action="{{ route('dashboard.user.update', ['user' => $user->id], false) }}" novalidate>
                     @csrf
                     @method('PUT')
                     <div class="mb-3">

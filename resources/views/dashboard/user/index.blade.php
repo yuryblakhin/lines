@@ -3,7 +3,6 @@
 @section('content')
     <div class="col-12">
         <div class="card">
-            <div class="card-header"><h3 class="card-title">Users</h3></div>
             <div class="table-responsive">
                 <table class="table card-table table-vcenter text-nowrap datatable">
                     <thead>
@@ -58,7 +57,7 @@
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                 <path d="M12 5l0 14"></path>
                 <path d="M5 12l14 0"></path>
-            </svg> New User
+            </svg> Create
         </a>
     </div>
 
