@@ -116,9 +116,13 @@ return [
     'password' => [
         'letters' => 'The :attribute field must contain at least one letter.',
         'mixed' => 'The :attribute field must contain at least one uppercase and one lowercase letter.',
-        'numbers' => 'The :attribute field must contain at least one number.',
-        'symbols' => 'The :attribute field must contain at least one symbol.',
-        'uncompromised' => 'The given :attribute has appeared in a data leak. Please choose a different :attribute.',
+        'lowercase' => 'The :attribute field must contain a lowercase Latin character (from a to z).',
+        'uppercase' => 'The :attribute field must contain an uppercase Latin character (from A to Z).',
+        'numbers' => 'The :attribute field must contain numbers (from 0 to 9).',
+        'symbols' => 'The :attribute field must contain special characters (~!@#$%^&*_-+=`|(){}[]:;\'<>,.?;").',
+        'uncompromised' => 'This :attribute has appeared in a data breach. Please choose another :attribute.',
+        'whitespace' => 'The :attribute field must not contain any spaces.',
+        'only_latin' => 'The :attribute field must only contain Latin characters.',
     ],
     'present' => 'The :attribute field must be present.',
     'prohibited' => 'The :attribute field is prohibited.',
@@ -151,6 +155,8 @@ return [
     'url' => 'The :attribute field must be a valid URL.',
     'ulid' => 'The :attribute field must be a valid ULID.',
     'uuid' => 'The :attribute field must be a valid UUID.',
+    'nullable_integer' => 'The value must be an integer or null.',
+    'nullable_string' => 'The value must be a string or null.',
 
     /*
     |--------------------------------------------------------------------------

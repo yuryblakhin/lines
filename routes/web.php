@@ -5,7 +5,8 @@ declare(strict_types=1);
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\Dashboard\HomeController;
+use App\Http\Controllers\Dashboard\Home\HomeController;
+use App\Http\Controllers\Dashboard\User\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Auth
@@ -24,7 +25,18 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::middleware('auth')->name('dashboard.')->group(function () {
+    // Home
     Route::name('home.')->group(function () {
         Route::get('/', [HomeController::class, 'index'])->name('index');
+    });
+
+    // Users
+    Route::prefix('users')->name('user.')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::get('/create', [UserController::class, 'create'])->name('create');
+        Route::post('/', [UserController::class, 'store'])->name('store');
+        Route::get('/{user}/edit', [UserController::class, 'edit'])->name('edit')->whereNumber('user');
+        Route::put('/{user}', [UserController::class, 'update'])->name('update')->whereNumber('user');
+        Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
     });
 });

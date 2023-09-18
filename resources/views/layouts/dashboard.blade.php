@@ -28,6 +28,7 @@
             <div class="page-body">
                 <div class="container-xl">
                     <div class="row row-deck row-cards">
+                        @include('layouts.partials.alert')
                         @yield('content')
                     </div>
                 </div>

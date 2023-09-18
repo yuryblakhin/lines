@@ -29,7 +29,7 @@ class UserDemoSeeder extends Seeder
 
         foreach ($users as $user) {
             if (!$this->userRepository->findByEmail($user['email'])) {
-                $this->userRepository->createUser($user);
+                $this->userRepository->storeUser($user);
             }
         }
     }
