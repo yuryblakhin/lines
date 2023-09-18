@@ -44,8 +44,8 @@
                         <label for="parent_id" class="form-label">{{ __('Parent Category') }}</label>
                         <select id="parent_id" class="form-control @error('parent_id') is-invalid @enderror" name="parent_id">
                             <option value="">—</option> <!-- Опция для отсутствия родительской категории -->
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @foreach ($categories as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
 
