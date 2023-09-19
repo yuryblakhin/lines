@@ -28,7 +28,7 @@
                         @foreach ($products as $product)
                             <tr>
                                 <td><span class="text-secondary">{{ $product->id }}</span></td>
-                                <td><img src="{{ $product->getImagePath() }}" alt="{{ $product->name }}"></td>
+                                <td><img class="avatar avatar-xl" src="{{ $product->getImagePath() }}" alt="{{ $product->name }}"></td>
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->code }}</td>
                                 <td>{{ $product->getCategoryNames() }}</td>

@@ -37,7 +37,7 @@ class ProductRepository implements ProductRepositoryContract
         DB::beginTransaction();
 
         try {
-            if (array_key_exists('image', $data)) {
+            if (isset($data['image'])) {
                 $image = $data['image'];
                 $uuid = Str::uuid()->toString();
                 $uniqueFileName = $uuid . '.' . $image->getClientOriginalExtension();
@@ -68,7 +68,7 @@ class ProductRepository implements ProductRepositoryContract
         DB::beginTransaction();
 
         try {
-            if (array_key_exists('image', $data)) {
+            if (isset($data['image'])) {
                 $image = $data['image'];
                 $uuid = Str::uuid()->toString();
                 $uniqueFileName = $uuid . '.' . $image->getClientOriginalExtension();
@@ -80,7 +80,7 @@ class ProductRepository implements ProductRepositoryContract
                 $data['image'] = $destinationDisk->putFileAs("up/{$firstLevel}/{$secondLevel}", $image, $uniqueFileName);
             }
 
-            if (array_key_exists('categories', $data)) {
+            if (isset($data['categories'])) {
                 $product->categories()->sync($data['categories']);
             }
 
