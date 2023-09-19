@@ -68,6 +68,29 @@ return [
             'destroy' => [
                 'redirect' => 'Category data has been successfully deleted!'
             ]
+        ],
+        'product' => [
+            'index' => [
+                'title' => 'Products',
+                'description' => 'Manage your products',
+            ],
+            'create' => [
+                'title' => 'New Product',
+                'description' => 'Manage your products',
+            ],
+            'store' => [
+                'redirect' => 'Category data has been successfully created!'
+            ],
+            'edit' => [
+                'title' => 'Edit Product',
+                'description' => 'Manage your products',
+            ],
+            'update' => [
+                'redirect' => 'Product data has been successfully updated!'
+            ],
+            'destroy' => [
+                'redirect' => 'Product data has been successfully deleted!'
+            ]
         ]
     ]
 ];

@@ -9,6 +9,7 @@ use App\Enums\SortDirectionEnum;
 use App\Models\User;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\DB;
 use Throwable;
 
 class UserRepository implements UserRepositoryContract
@@ -31,36 +32,57 @@ class UserRepository implements UserRepositoryContract
 
     public function storeUser(array $data): object
     {
+        DB::beginTransaction();
+
         try {
-            return User::query()->create($data);
+            $user = new User($data);
+            $user->save();
+
+            DB::commit();
+
+            return $user;
         } catch (Throwable $exception) {
+            DB::rollback();
+
             throw new Exception($exception->getMessage());
         }
     }
 
     public function updateUser(User $user, array $data): object
     {
+        DB::beginTransaction();
+
         try {
             $user->update($data);
 
+            DB::commit();
+
             return $user;
         } catch (Throwable $exception) {
+            DB::rollback();
+
             throw new Exception($exception->getMessage());
         }
     }
 
     public function destroyUser(User $user): void
     {
+        DB::beginTransaction();
+
         try {
             $user->delete();
+
+            DB::commit();
         } catch (Throwable $exception) {
+            DB::rollback();
+
             throw new Exception($exception->getMessage());
         }
     }
 
     public function findByEmail(string $email): object
     {
-        $user = User::query()->where('email', $email)->first();
+        $user = User::where('email', $email)->first();
 
         if (!$user) {
             throw new ModelNotFoundException();
@@ -71,7 +93,7 @@ class UserRepository implements UserRepositoryContract
 
     public function findById(int $id): object
     {
-        $user = User::query()->where('id', $id)->first();
+        $user = User::where('id', $id)->first();
 
         if (!$user) {
             throw new ModelNotFoundException();

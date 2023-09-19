@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Contracts\Category\CategoryRepositoryContract;
+use App\Contracts\Product\ProductRepositoryContract;
 use App\Contracts\User\UserRepositoryContract;
 use App\Repositories\Category\CategoryRepository;
+use App\Repositories\Product\ProductRepository;
 use App\Repositories\User\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -16,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(UserRepositoryContract::class, UserRepository::class);
         $this->app->bind(CategoryRepositoryContract::class, CategoryRepository::class);
+        $this->app->bind(ProductRepositoryContract::class, ProductRepository::class);
     }
 
     public function boot(): void

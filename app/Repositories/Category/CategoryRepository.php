@@ -32,9 +32,9 @@ class CategoryRepository implements CategoryRepositoryContract
 
     public function storeCategory(array $data): object
     {
-        try {
-            DB::beginTransaction();
+        DB::beginTransaction();
 
+        try {
             $category = new Category($data);
 
             if (isset($data['parent_id'])) {
@@ -61,9 +61,9 @@ class CategoryRepository implements CategoryRepositoryContract
 
     public function updateCategory(Category $category, array $data): object
     {
-        try {
-            DB::beginTransaction();
+        DB::beginTransaction();
 
+        try {
             if (isset($data['parent_id']) && $data['parent_id'] !== $category->parent_id) {
                 $parentCategory = Category::find($data['parent_id']);
 
@@ -88,9 +88,9 @@ class CategoryRepository implements CategoryRepositoryContract
 
     public function destroyCategory(Category $category): void
     {
-        try {
-            DB::beginTransaction();
+        DB::beginTransaction();
 
+        try {
             $category->delete();
 
             DB::commit();

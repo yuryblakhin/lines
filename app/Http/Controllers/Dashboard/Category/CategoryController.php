@@ -8,8 +8,6 @@ use App\Contracts\Category\CategoryRepositoryContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\CategoryStoreRequest;
 use App\Http\Requests\Category\CategoryUpdateRequest;
-use App\Http\Resources\Category\CategoryCollection;
-use App\Http\Resources\Category\CategoryResource;
 use App\Models\Category;
 use Exception;
 use Illuminate\Http\RedirectResponse;
@@ -47,7 +45,7 @@ class CategoryController extends Controller
             $this->setTemplate('dashboard.category.index');
             $this->setTitle(__('messages.dashboard.category.index.title'));
             $this->setDescription(__('messages.dashboard.category.index.description'));
-            $this->setTemplateData(['categories' => new CategoryCollection($categories)]);
+            $this->setTemplateData(['categories' => $categories]);
 
             return $this->renderTemplate();
         } catch (Throwable $exception) {
@@ -125,7 +123,7 @@ class CategoryController extends Controller
             $this->setTitle(__('messages.dashboard.category.edit.title'));
             $this->setDescription(__('messages.dashboard.category.edit.description'));
             $this->setTemplateData([
-                'category' => new CategoryResource($category),
+                'category' => $category,
                 'categories' => $categories,
             ]);
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Dashboard\Category\CategoryController;
 use App\Http\Controllers\Dashboard\Home\HomeController;
+use App\Http\Controllers\Dashboard\Product\ProductController;
 use App\Http\Controllers\Dashboard\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +40,16 @@ Route::middleware('auth')->name('dashboard.')->group(function () {
         Route::get('/{category}/edit', [CategoryController::class, 'edit'])->name('edit')->whereNumber('category');
         Route::put('/{category}', [CategoryController::class, 'update'])->name('update')->whereNumber('category');
         Route::delete('/{category}', [CategoryController::class, 'destroy'])->name('destroy');
+    });
+
+    // Products
+    Route::prefix('products')->name('product.')->group(function () {
+        Route::get('/', [ProductController::class, 'index'])->name('index');
+        Route::get('/create', [ProductController::class, 'create'])->name('create');
+        Route::post('/', [ProductController::class, 'store'])->name('store');
+        Route::get('/{product}/edit', [ProductController::class, 'edit'])->name('edit')->whereNumber('product');
+        Route::put('/{product}', [ProductController::class, 'update'])->name('update')->whereNumber('product');
+        Route::delete('/{product}', [ProductController::class, 'destroy'])->name('destroy');
     });
 
     // Users

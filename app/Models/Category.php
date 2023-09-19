@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Kalnoy\Nestedset\NodeTrait;
 
 class Category extends Model
@@ -30,4 +31,9 @@ class Category extends Model
     }
 
     public static array $sortable = ['id', 'name', 'code', 'created_at', 'updated_at'];
+
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }

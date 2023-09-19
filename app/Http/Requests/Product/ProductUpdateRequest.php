@@ -2,17 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Requests\Category;
+namespace App\Http\Requests\Product;
 
-use App\Rules\Category\CategoryNotParentRule;
-use App\Rules\Category\CategoryUniqueCodeRule;
 use App\Rules\ModelExistsRule;
-use App\Rules\NullableIntegerRule;
 use App\Rules\NullableStringRule;
+use App\Rules\Product\ProductUniqueCodeRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 
-class CategoryUpdateRequest extends FormRequest
+class ProductUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -37,10 +35,14 @@ class CategoryUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'string', 'max:128'],
-            'code' => ['sometimes', 'string', 'max:128', new CategoryUniqueCodeRule(existId: $this->route('category'))],
+            'name' => ['sometimes', 'string', 'max:255'],
+            'code' => ['sometimes', 'string', 'max:255', new ProductUniqueCodeRule(existId: $this->route('product'))],
             'description' => ['sometimes', new NullableStringRule(), 'max:1024'],
-            'parent_id' => [new NullableIntegerRule(), new ModelExistsRule(table: 'categories', column: 'id'), new CategoryNotParentRule(existId: $this->route('category'))],
+            'image' => ['sometimes', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+            'price' => ['sometimes', 'numeric', 'min:0'],
+            'stock_quantity' => ['sometimes', 'integer', 'min:0'],
+            'categories' => ['sometimes', 'array'],
+            'categories.*' => [new ModelExistsRule(table: 'categories', column: 'id')],
         ];
     }
 }

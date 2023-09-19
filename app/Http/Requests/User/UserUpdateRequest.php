@@ -26,10 +26,10 @@ class UserUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['sometimes', 'min:1', 'max:60', 'email', new UserUniqueEmailRule(existId: $this->route('user')),
+            'email' => ['sometimes', 'string', 'max:255', 'email', new UserUniqueEmailRule(existId: $this->route('user')),
             ],
-            'first_name' => ['sometimes', new NullableStringRule(), 'max:60'],
-            'last_name' => ['sometimes', new NullableStringRule(), 'max:60'],
+            'first_name' => ['sometimes', new NullableStringRule(), 'max:255'],
+            'last_name' => ['sometimes', new NullableStringRule(), 'max:255'],
         ];
     }
 }

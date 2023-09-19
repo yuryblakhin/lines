@@ -8,8 +8,6 @@ use App\Contracts\User\UserRepositoryContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserStoreRequest;
 use App\Http\Requests\User\UserUpdateRequest;
-use App\Http\Resources\User\UserCollection;
-use App\Http\Resources\User\UserResource;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -46,7 +44,7 @@ class UserController extends Controller
             $this->setTemplate('dashboard.user.index');
             $this->setTitle(__('messages.dashboard.user.index.title'));
             $this->setDescription(__('messages.dashboard.user.index.description'));
-            $this->setTemplateData(['users' => new UserCollection($users)]);
+            $this->setTemplateData(['users' => $users]);
 
             return $this->renderTemplate();
         } catch (Throwable $exception) {
@@ -119,7 +117,7 @@ class UserController extends Controller
             $this->setTemplate('dashboard.user.edit');
             $this->setTitle(__('messages.dashboard.user.edit.title'));
             $this->setDescription(__('messages.dashboard.user.edit.description'));
-            $this->setTemplateData(['user' => new UserResource($user)]);
+            $this->setTemplateData(['user' => $user]);
 
             return $this->renderTemplate();
         } catch (Throwable $exception) {
