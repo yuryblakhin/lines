@@ -39,6 +39,8 @@ class ProductStoreRequest extends FormRequest
             'code' => ['required', 'string', 'max:255', new ProductUniqueCodeRule()],
             'description' => [new NullableStringRule(), 'max:1024'],
             'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+            'images' => ['array'],
+            'images.*' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
             'price' => ['required', 'numeric', 'min:0'],
             'stock_quantity' => ['required', 'integer', 'min:0'],
             'categories' => ['required', 'array'],

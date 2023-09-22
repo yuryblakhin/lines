@@ -46,7 +46,7 @@ class ProductRepository implements ProductRepositoryContract
                 $secondLevel = substr($hash, 2, 2);
                 $destinationDisk = Storage::disk(config('filesystems.default'));
 
-                $data['image'] = $destinationDisk->putFileAs("up/{$firstLevel}/{$secondLevel}", $image, $uniqueFileName);
+                $data['image_path'] = $destinationDisk->putFileAs("up/{$firstLevel}/{$secondLevel}", $image, $uniqueFileName);
             }
 
             $product = new Product($data);
@@ -77,7 +77,7 @@ class ProductRepository implements ProductRepositoryContract
                 $secondLevel = substr($hash, 2, 2);
                 $destinationDisk = Storage::disk(config('filesystems.default'));
 
-                $data['image'] = $destinationDisk->putFileAs("up/{$firstLevel}/{$secondLevel}", $image, $uniqueFileName);
+                $data['image_path'] = $destinationDisk->putFileAs("up/{$firstLevel}/{$secondLevel}", $image, $uniqueFileName);
             }
 
             if (isset($data['categories'])) {
