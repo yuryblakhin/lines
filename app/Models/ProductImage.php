@@ -15,6 +15,11 @@ class ProductImage extends Model
         'product_id',
         'image_path',
         'sort_order',
+        'active',
+    ];
+
+    protected $casts = [
+        'active' => 'boolean',
     ];
 
     public static array $sortable = ['id', 'sort_order', 'created_at', 'updated_at'];

@@ -7,9 +7,18 @@
                 <form method="POST" action="{{ route('dashboard.category.update', ['category' => $category->id], false) }}" novalidate>
                     @csrf
                     @method('PUT')
+
                     <div class="mb-3">
-                        <label for="id" class="form-label">{{ __('ID') }}</label>
-                        <span id="id" class="form-control disabled">{{ $category->id }}</span>
+                        <div class="form-check">
+                            <input type="checkbox" id="active" class="form-check-input @error('active') is-invalid @enderror" name="active" {{ old('active', $category->active) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="active">Active</label>
+                        </div>
+
+                        @error('active')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
@@ -59,15 +68,6 @@
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="created_at" class="form-label">{{ __('Created At') }}</label>
-                        <span id="created_at" class="form-control disabled">{{ $category->created_at }}</span>
-                    </div>
-                    <div class="mb-3">
-                        <label for="created_at" class="form-label">{{ __('Updated At') }}</label>
-                        <span id="created_at" class="form-control disabled">{{ $category->updated_at }}</span>
                     </div>
 
                     <div class="mb-3">

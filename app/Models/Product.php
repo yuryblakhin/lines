@@ -17,6 +17,11 @@ class Product extends Model
         'code',
         'description',
         'image_path',
+        'active',
+    ];
+
+    protected $casts = [
+        'active' => 'boolean',
     ];
 
     public static array $sortable = ['id', 'name', 'code', 'created_at', 'updated_at'];
@@ -39,5 +44,12 @@ class Product extends Model
     public function getCategoryNames(): string
     {
         return $this->categories->pluck('name')->implode(', ');
+    }
+
+    public function warehouses(): BelongsToMany
+    {
+        return $this->belongsToMany(Warehouse::class)
+            ->withPivot('quantity', 'price')
+            ->withTimestamps();
     }
 }

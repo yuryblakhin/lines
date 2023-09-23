@@ -19,6 +19,7 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'password',
+        'active',
     ];
 
     protected $hidden = [
@@ -28,6 +29,7 @@ class User extends Authenticatable
 
     protected $casts = [
         'password' => 'hashed',
+        'active' => 'boolean',
     ];
 
     protected function email(): Attribute

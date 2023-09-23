@@ -9,6 +9,7 @@ use App\Http\Controllers\Dashboard\Category\CategoryController;
 use App\Http\Controllers\Dashboard\Home\HomeController;
 use App\Http\Controllers\Dashboard\Product\ProductController;
 use App\Http\Controllers\Dashboard\User\UserController;
+use App\Http\Controllers\Dashboard\Warehouse\WarehouseController;
 use Illuminate\Support\Facades\Route;
 
 // Auth
@@ -30,6 +31,16 @@ Route::middleware('auth')->name('dashboard.')->group(function () {
     // Home
     Route::name('home.')->group(function () {
         Route::get('/', [HomeController::class, 'index'])->name('index');
+    });
+
+    // Warehouses
+    Route::prefix('warehouses')->name('warehouse.')->group(function () {
+        Route::get('/', [WarehouseController::class, 'index'])->name('index');
+        Route::get('/create', [WarehouseController::class, 'create'])->name('create');
+        Route::post('/', [WarehouseController::class, 'store'])->name('store');
+        Route::get('/{warehouse}/edit', [WarehouseController::class, 'edit'])->name('edit')->whereNumber('warehouse');
+        Route::put('/{warehouse}', [WarehouseController::class, 'update'])->name('update')->whereNumber('warehouse');
+        Route::delete('/{warehouse}', [WarehouseController::class, 'destroy'])->name('destroy');
     });
 
     // Categories

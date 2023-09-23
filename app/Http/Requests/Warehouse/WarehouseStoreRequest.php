@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Warehouse;
 
-use App\Rules\NullableStringRule;
-use App\Rules\User\UserUniqueEmailRule;
+use App\Rules\Warehouse\WarehouseUniqueCodeRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserUpdateRequest extends FormRequest
+class WarehouseStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -33,11 +32,12 @@ class UserUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['sometimes', 'string', 'max:255', 'email', new UserUniqueEmailRule(existId: $this->route('user')),
-            ],
-            'first_name' => ['sometimes', new NullableStringRule(), 'max:255'],
-            'last_name' => ['sometimes', new NullableStringRule(), 'max:255'],
-            'active' => ['sometimes', 'boolean'],
+            'name' => ['required', 'string', 'max:255'],
+            'code' => ['required', 'string', 'max:255', new WarehouseUniqueCodeRule()],
+            'address' => ['string', 'max:1024'],
+            'phones' => ['array'],
+            'phones.*' => ['string'],
+            'active' => ['required', 'boolean'],
         ];
     }
 }

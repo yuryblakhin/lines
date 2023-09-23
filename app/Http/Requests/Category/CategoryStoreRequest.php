@@ -26,6 +26,10 @@ class CategoryStoreRequest extends FormRequest
         if ($this->has('code')) {
             $this->merge(['code' => Str::slug($this->input('code'))]);
         }
+
+        $this->merge([
+            'active' => $this->has('active'),
+        ]);
     }
 
     /**
@@ -40,6 +44,7 @@ class CategoryStoreRequest extends FormRequest
             'code' => ['required', 'string', 'max:255', new CategoryUniqueCodeRule()],
             'description' => [new NullableStringRule(), 'max:1024'],
             'parent_id' => [new NullableIntegerRule(), new ModelExistsRule(table: 'categories', column: 'id')],
+            'active' => ['required', 'boolean'],
         ];
     }
 }

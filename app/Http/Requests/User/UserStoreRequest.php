@@ -19,6 +19,13 @@ class UserStoreRequest extends FormRequest
         return true;
     }
 
+    public function prepareForValidation(): void
+    {
+        $this->merge([
+            'active' => $this->has('active'),
+        ]);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -31,6 +38,7 @@ class UserStoreRequest extends FormRequest
             'password' => ['required', 'string', 'max:255', new UserPasswordRule()],
             'first_name' => [new NullableStringRule(), 'max:255'],
             'last_name' => [new NullableStringRule(), 'max:255'],
+            'active' => ['required', 'boolean'],
         ];
     }
 }

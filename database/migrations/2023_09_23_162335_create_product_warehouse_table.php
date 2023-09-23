@@ -12,15 +12,15 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('product_images', function (Blueprint $table) {
-            $table->id();
+        Schema::create('product_warehouse', function (Blueprint $table) {
             $table->unsignedBigInteger('product_id');
-            $table->string('image_path');
-            $table->integer('sort_order')->default(0);
-            $table->boolean('active')->default(true);
+            $table->unsignedBigInteger('warehouse_id');
+            $table->integer('quantity');
+            $table->decimal('price', 8, 2);
             $table->timestamps();
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('warehouse_id')->references('id')->on('warehouses')->onDelete('cascade');
         });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_images');
+        Schema::dropIfExists('product_warehouse');
     }
 };

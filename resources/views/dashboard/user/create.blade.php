@@ -8,6 +8,19 @@
                     @csrf
 
                     <div class="mb-3">
+                        <div class="form-check">
+                            <input type="checkbox"  id="active" class="form-check-input @error('active') is-invalid @enderror" name="active" {{ old('active') ? 'checked' : '' }}>
+                            <label class="form-check-label" for="active">Active</label>
+                        </div>
+
+                        @error('active')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
                         <label for="email" class="form-label">{{ __('Email Address') }}</label>
                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 

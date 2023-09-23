@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->unsignedInteger('left')->nullable();
             $table->unsignedInteger('right')->nullable();
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

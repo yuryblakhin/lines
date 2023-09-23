@@ -27,6 +27,10 @@ class CategoryUpdateRequest extends FormRequest
         if ($this->has('code')) {
             $this->merge(['code' => Str::slug($this->input('code'))]);
         }
+
+        $this->merge([
+            'active' => $this->has('active'),
+        ]);
     }
 
     /**
@@ -41,6 +45,7 @@ class CategoryUpdateRequest extends FormRequest
             'code' => ['sometimes', 'string', 'max:128', new CategoryUniqueCodeRule(existId: $this->route('category'))],
             'description' => ['sometimes', new NullableStringRule(), 'max:1024'],
             'parent_id' => [new NullableIntegerRule(), new ModelExistsRule(table: 'categories', column: 'id'), new CategoryNotParentRule(existId: $this->route('category'))],
+            'active' => ['sometimes', 'boolean'],
         ];
     }
 }

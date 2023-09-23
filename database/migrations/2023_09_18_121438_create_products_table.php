@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('code')->unique();
             $table->text('description')->nullable();
             $table->string('image_path')->nullable();
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

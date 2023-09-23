@@ -91,6 +91,29 @@ return [
             'destroy' => [
                 'redirect' => 'Product data has been successfully deleted!'
             ]
-        ]
+        ],
+        'warehouse' => [
+            'index' => [
+                'title' => 'Warehouses',
+                'description' => 'Manage your warehouses',
+            ],
+            'create' => [
+                'title' => 'New Warehouse',
+                'description' => 'Manage your warehouses',
+            ],
+            'store' => [
+                'redirect' => 'Warehouse data has been successfully created!'
+            ],
+            'edit' => [
+                'title' => 'Edit Warehouse',
+                'description' => 'Manage your warehouses',
+            ],
+            'update' => [
+                'redirect' => 'Warehouse data has been successfully updated!'
+            ],
+            'destroy' => [
+                'redirect' => 'Warehouse data has been successfully deleted!'
+            ]
+        ],
     ]
 ];

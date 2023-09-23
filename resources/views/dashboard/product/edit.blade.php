@@ -9,8 +9,16 @@
                     @method('PUT')
 
                     <div class="mb-3">
-                        <label for="id" class="form-label">{{ __('ID') }}</label>
-                        <span id="id" class="form-control disabled">{{ $product->id }}</span>
+                        <div class="form-check">
+                            <input type="checkbox"  id="active" class="form-check-input @error('active') is-invalid @enderror" name="active" {{ old('active', $product->active) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="active">Active</label>
+                        </div>
+
+                        @error('active')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
@@ -63,26 +71,26 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="additional_images" class="form-label">{{ __('Additional Images') }}</label>
+                        <label for="images" class="form-label">{{ __('Additional Images') }}</label>
                         @if ($product->images->count() > 0)
                             <div class="row">
-                                @foreach ($product->images as $additionalImage)
+                                @foreach ($product->images as $image)
                                     <div class="col-md-4 mb-3">
-                                        <img src="{{ $additionalImage->getImagePath() }}" alt="Additional Image" class="img-thumbnail">
-                                        <button type="button" class="btn btn-danger mt-2 deleteAdditionalImageBtn" data-image-id="{{ $additionalImage->id }}">{{ __('Delete Image') }}</button>
+                                        <img src="{{ $image->getImagePath() }}" alt="Additional Image" class="img-thumbnail">
+                                        <button type="button" class="btn btn-danger mt-2 deleteImageBtn" data-image-id="{{ $image->id }}">{{ __('Delete Image') }}</button>
                                     </div>
                                 @endforeach
                             </div>
                         @endif
-                        <div id="additional-images-container">
+                        <div id="images-container">
                             <div class="input-group image-field">
-                                <input type="file" class="form-control @error('additional_images.*') is-invalid @enderror" name="additional_images[]" accept="image/*" multiple>
+                                <input type="file" class="form-control @error('images.*') is-invalid @enderror" name="images[]" accept="image/*" multiple>
                             </div>
                         </div>
 
                         <button type="button" id="add-image-button" class="btn btn-secondary mt-2">Add Image</button>
 
-                        @error('additional_images.*')
+                        @error('images.*')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -105,15 +113,6 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="created_at" class="form-label">{{ __('Created At') }}</label>
-                        <span id="created_at" class="form-control disabled">{{ $product->created_at }}</span>
-                    </div>
-                    <div class="mb-3">
-                        <label for="created_at" class="form-label">{{ __('Updated At') }}</label>
-                        <span id="created_at" class="form-control disabled">{{ $product->updated_at }}</span>
-                    </div>
-
-                    <div class="mb-3">
                         <button type="submit" class="btn btn-primary w-100">
                             {{ __('Update') }}
                         </button>
@@ -127,7 +126,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const addImageButton = document.getElementById('add-image-button');
-            const additionalImagesContainer = document.getElementById('additional-images-container');
+            const imagesContainer = document.getElementById('images-container');
             const maxImages = 10;
 
             let imageIndex = {{ $product->images->count() + 1 }};
@@ -143,7 +142,7 @@
                 const input = document.createElement('input');
                 input.type = 'file';
                 input.className = 'form-control';
-                input.name = 'additional_images[]';
+                input.name = 'images[]';
                 input.accept = 'image/*';
                 input.multiple = true;
 
@@ -154,12 +153,12 @@
 
                 imageField.appendChild(input);
                 imageField.appendChild(removeButton);
-                additionalImagesContainer.appendChild(imageField);
+                imagesContainer.appendChild(imageField);
 
                 imageIndex++;
             });
 
-            additionalImagesContainer.addEventListener('click', function(event) {
+            imagesContainer.addEventListener('click', function(event) {
                 if (event.target.classList.contains('remove-image-button')) {
                     const imageField = event.target.closest('.image-field');
                     imageField.remove();
@@ -167,18 +166,18 @@
                 }
             });
 
-            const deleteAdditionalImageBtns = document.getElementsByClassName('deleteAdditionalImageBtn');
-            for (let i = 0; i < deleteAdditionalImageBtns.length; i++) {
-                deleteAdditionalImageBtns[i].addEventListener('click', function () {
+            const deleteImageBtns = document.getElementsByClassName('deleteImageBtn');
+            for (let i = 0; i < deleteImageBtns.length; i++) {
+                deleteImageBtns[i].addEventListener('click', function () {
                     let productImageId = this.getAttribute('data-image-id');
-                    let confirmation = confirm("Are you sure you want to delete this additional image?");
+                    let confirmation = confirm("Are you sure you want to delete this image?");
                     if (confirmation) {
-                        deleteAdditionalImage(productImageId, this);
+                        deleteImage(productImageId, this);
                     }
                 });
             }
 
-            function deleteAdditionalImage(productImageId, buttonElement) {
+            function deleteImage(productImageId, buttonElement) {
                 // Отправить AJAX-запрос на удаление изображения
                 const xhr = new XMLHttpRequest();
 
@@ -192,15 +191,15 @@
                         imageContainer.parentNode.removeChild(imageContainer);
                         imageIndex--;
 
-                        console.log('Additional image deleted successfully.');
+                        console.log('Image deleted successfully.');
                     } else {
                         // Возникла ошибка при удалении изображения
-                        console.error('Failed to delete additional image.');
+                        console.error('Failed to delete image.');
                     }
                 };
 
                 xhr.onerror = function () {
-                    console.error('Error occurred while deleting additional image.');
+                    console.error('Error occurred while deleting image.');
                 };
 
                 xhr.send();

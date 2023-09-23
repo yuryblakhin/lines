@@ -47,12 +47,12 @@ class ProductRepository implements ProductRepositoryContract
                 $data['image_path'] = $this->fileUploadService->upload($data['image'], 'product');
             }
 
-            $additionalImages = [];
+            $images = [];
 
-            if (isset($data['additional_images'])) {
-                foreach ($data['additional_images'] as $key => $additionalImage) {
-                    $additionalImages[] = [
-                        'image_path' => $this->fileUploadService->upload($additionalImage, 'product'),
+            if (isset($data['images'])) {
+                foreach ($data['images'] as $key => $image) {
+                    $images[] = [
+                        'image_path' => $this->fileUploadService->upload($image, 'product'),
                         'sort_order' => $key,
                     ];
                 }
@@ -61,7 +61,7 @@ class ProductRepository implements ProductRepositoryContract
             $product = new Product($data);
             $product->save();
             $product->categories()->attach($data['categories']);
-            $product->images()->createMany($additionalImages);
+            $product->images()->createMany($images);
 
             DB::commit();
 
@@ -82,12 +82,12 @@ class ProductRepository implements ProductRepositoryContract
                 $data['image_path'] = $this->fileUploadService->upload($data['image'], 'product');
             }
 
-            $additionalImages = [];
+            $images = [];
 
-            if (isset($data['additional_images'])) {
-                foreach ($data['additional_images'] as $key => $additionalImage) {
-                    $additionalImages[] = [
-                        'image_path' => $this->fileUploadService->upload($additionalImage, 'product'),
+            if (isset($data['images'])) {
+                foreach ($data['images'] as $key => $image) {
+                    $images[] = [
+                        'image_path' => $this->fileUploadService->upload($image, 'product'),
                         'sort_order' => $key,
                     ];
                 }
@@ -97,7 +97,7 @@ class ProductRepository implements ProductRepositoryContract
                 $product->categories()->sync($data['categories']);
             }
 
-            $product->images()->createMany($additionalImages);
+            $product->images()->createMany($images);
             $product->update($data);
 
             DB::commit();

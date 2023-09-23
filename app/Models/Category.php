@@ -18,6 +18,11 @@ class Category extends Model
         'code',
         'description',
         'parent_id',
+        'active',
+    ];
+
+    protected $casts = [
+        'active' => 'boolean',
     ];
 
     public function getLftName(): string

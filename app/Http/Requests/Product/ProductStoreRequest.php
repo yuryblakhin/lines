@@ -25,6 +25,10 @@ class ProductStoreRequest extends FormRequest
         if ($this->has('code')) {
             $this->merge(['code' => Str::slug($this->input('code'))]);
         }
+
+        $this->merge([
+            'active' => $this->has('active'),
+        ]);
     }
 
     /**
@@ -39,10 +43,11 @@ class ProductStoreRequest extends FormRequest
             'code' => ['required', 'string', 'max:255', new ProductUniqueCodeRule()],
             'description' => [new NullableStringRule(), 'max:1024'],
             'image' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
-            'additional_images' => ['array'],
-            'additional_images.*' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+            'images' => ['array'],
+            'images.*' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
             'categories' => ['required', 'array'],
             'categories.*' => [new ModelExistsRule(table: 'categories', column: 'id')],
+            'active' => ['required', 'boolean'],
         ];
     }
 }

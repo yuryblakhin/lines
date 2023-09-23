@@ -8,6 +8,19 @@
                     @csrf
 
                     <div class="mb-3">
+                        <div class="form-check">
+                            <input type="checkbox" id="active" class="form-check-input @error('active') is-invalid @enderror" name="active" {{ old('active') ? 'checked' : '' }}>
+                            <label class="form-check-label" for="active">Active</label>
+                        </div>
+
+                        @error('active')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
                         <label for="name" class="form-label">{{ __('Name') }}</label>
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
 

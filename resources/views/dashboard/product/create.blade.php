@@ -8,6 +8,19 @@
                     @csrf
 
                     <div class="mb-3">
+                        <div class="form-check">
+                            <input type="checkbox"  id="active" class="form-check-input @error('active') is-invalid @enderror" name="active" {{ old('active') ? 'checked' : '' }}>
+                            <label class="form-check-label" for="active">Active</label>
+                        </div>
+
+                        @error('active')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
                         <label for="name" class="form-label">{{ __('Name') }}</label>
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
 
@@ -52,17 +65,17 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="additional_images" class="form-label">{{ __('Additional Images') }}</label>
+                        <label for="images" class="form-label">{{ __('Additional Images') }}</label>
 
-                        <div id="additional-images-container">
+                        <div id="images-container">
                             <div class="input-group image-field">
-                                <input type="file" class="form-control @error('additional_images.*') is-invalid @enderror" name="additional_images[]" accept="image/*" multiple>
+                                <input type="file" class="form-control @error('images.*') is-invalid @enderror" name="images[]" accept="image/*" multiple>
                             </div>
                         </div>
 
                         <button type="button" id="add-image-button" class="btn btn-secondary mt-2">Add Image</button>
 
-                        @error('additional_images.*')
+                        @error('images.*')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -98,7 +111,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const addImageButton = document.getElementById('add-image-button');
-            const additionalImagesContainer = document.getElementById('additional-images-container');
+            const imagesContainer = document.getElementById('images-container');
             const maxImages = 10;
 
             let imageIndex = 1;
@@ -114,7 +127,7 @@
                 const input = document.createElement('input');
                 input.type = 'file';
                 input.className = 'form-control';
-                input.name = 'additional_images[]';
+                input.name = 'images[]';
                 input.accept = 'image/*';
                 input.multiple = true;
 
@@ -125,12 +138,12 @@
 
                 imageField.appendChild(input);
                 imageField.appendChild(removeButton);
-                additionalImagesContainer.appendChild(imageField);
+                imagesContainer.appendChild(imageField);
 
                 imageIndex++;
             });
 
-            additionalImagesContainer.addEventListener('click', function(event) {
+            imagesContainer.addEventListener('click', function(event) {
                 if (event.target.classList.contains('remove-image-button')) {
                     const imageField = event.target.closest('.image-field');
                     imageField.remove();
