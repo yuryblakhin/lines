@@ -20,7 +20,7 @@
                     <tbody>
                     @if ($warehouses->isEmpty())
                         <tr>
-                            <td colspan="7">No warehouses found</td>
+                            <td colspan="8">No warehouses found</td>
                         </tr>
                     @else
                         @foreach ($warehouses as $warehouse)

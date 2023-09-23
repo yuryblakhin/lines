@@ -19,7 +19,7 @@
                     <tbody>
                     @if ($users->isEmpty())
                         <tr>
-                            <td colspan="6">No users found</td>
+                            <td colspan="7">No users found</td>
                         </tr>
                     @else
                         @foreach ($users as $user)

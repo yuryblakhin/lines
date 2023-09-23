@@ -20,7 +20,7 @@
                     <tbody>
                     @if ($categories->isEmpty())
                         <tr>
-                            <td colspan="7">No categories found</td>
+                            <td colspan="8">No categories found</td>
                         </tr>
                     @else
                         @foreach ($categories as $category)
