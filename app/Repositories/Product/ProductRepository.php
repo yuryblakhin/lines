@@ -7,15 +7,21 @@ namespace App\Repositories\Product;
 use App\Contracts\Product\ProductRepositoryContract;
 use App\Enums\SortDirectionEnum;
 use App\Models\Product;
+use App\Services\FileUploadService;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Throwable;
 
 class ProductRepository implements ProductRepositoryContract
 {
+    protected FileUploadService $fileUploadService;
+
+    public function __construct(FileUploadService $fileUploadService)
+    {
+        $this->fileUploadService = $fileUploadService;
+    }
+
     public function getAllProducts(array $data): object
     {
         $perPage = (int) ($data['per_page'] ?? config('pagination.per_page'));
@@ -38,20 +44,24 @@ class ProductRepository implements ProductRepositoryContract
 
         try {
             if (isset($data['image'])) {
-                $image = $data['image'];
-                $uuid = Str::uuid()->toString();
-                $uniqueFileName = $uuid . '.' . $image->getClientOriginalExtension();
-                $hash = md5($uuid);
-                $firstLevel = substr($hash, 0, 2);
-                $secondLevel = substr($hash, 2, 2);
-                $destinationDisk = Storage::disk(config('filesystems.default'));
+                $data['image_path'] = $this->fileUploadService->upload($data['image'], 'product');
+            }
 
-                $data['image_path'] = $destinationDisk->putFileAs("up/{$firstLevel}/{$secondLevel}", $image, $uniqueFileName);
+            $additionalImages = [];
+
+            if (isset($data['additional_images'])) {
+                foreach ($data['additional_images'] as $key => $additionalImage) {
+                    $additionalImages[] = [
+                        'image_path' => $this->fileUploadService->upload($additionalImage, 'product'),
+                        'sort_order' => $key,
+                    ];
+                }
             }
 
             $product = new Product($data);
             $product->save();
             $product->categories()->attach($data['categories']);
+            $product->images()->createMany($additionalImages);
 
             DB::commit();
 
@@ -69,21 +79,25 @@ class ProductRepository implements ProductRepositoryContract
 
         try {
             if (isset($data['image'])) {
-                $image = $data['image'];
-                $uuid = Str::uuid()->toString();
-                $uniqueFileName = $uuid . '.' . $image->getClientOriginalExtension();
-                $hash = md5($uuid);
-                $firstLevel = substr($hash, 0, 2);
-                $secondLevel = substr($hash, 2, 2);
-                $destinationDisk = Storage::disk(config('filesystems.default'));
+                $data['image_path'] = $this->fileUploadService->upload($data['image'], 'product');
+            }
 
-                $data['image_path'] = $destinationDisk->putFileAs("up/{$firstLevel}/{$secondLevel}", $image, $uniqueFileName);
+            $additionalImages = [];
+
+            if (isset($data['additional_images'])) {
+                foreach ($data['additional_images'] as $key => $additionalImage) {
+                    $additionalImages[] = [
+                        'image_path' => $this->fileUploadService->upload($additionalImage, 'product'),
+                        'sort_order' => $key,
+                    ];
+                }
             }
 
             if (isset($data['categories'])) {
                 $product->categories()->sync($data['categories']);
             }
 
+            $product->images()->createMany($additionalImages);
             $product->update($data);
 
             DB::commit();

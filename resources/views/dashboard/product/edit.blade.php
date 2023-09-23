@@ -48,6 +48,11 @@
 
                     <div class="mb-3">
                         <label for="image" class="form-label">{{ __('Image') }}</label>
+                        @if ($product->image_path)
+                            <div class="mb-3">
+                                <img src="{{ $product->getImagePath() }}" alt="{{ $product->name }}" class="img-thumbnail mb-3">
+                            </div>
+                        @endif
                         <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image" accept="image/*">
 
                         @error('image')
@@ -58,21 +63,26 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="price" class="form-label">{{ __('Price') }}</label>
-                        <input id="price" type="number" min="0" step="0.01" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ old('price', $product->price) }}" required>
+                        <label for="additional_images" class="form-label">{{ __('Additional Images') }}</label>
+                        @if ($product->images->count() > 0)
+                            <div class="row">
+                                @foreach ($product->images as $additionalImage)
+                                    <div class="col-md-4 mb-3">
+                                        <img src="{{ $additionalImage->getImagePath() }}" alt="Additional Image" class="img-thumbnail">
+                                        <button type="button" class="btn btn-danger mt-2 deleteAdditionalImageBtn" data-image-id="{{ $additionalImage->id }}">{{ __('Delete Image') }}</button>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+                        <div id="additional-images-container">
+                            <div class="input-group image-field">
+                                <input type="file" class="form-control @error('additional_images.*') is-invalid @enderror" name="additional_images[]" accept="image/*" multiple>
+                            </div>
+                        </div>
 
-                        @error('price')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
+                        <button type="button" id="add-image-button" class="btn btn-secondary mt-2">Add Image</button>
 
-                    <div class="mb-3">
-                        <label for="stock_quantity" class="form-label">{{ __('Stock Quantity') }}</label>
-                        <input id="stock_quantity" type="number" min="0" class="form-control @error('stock_quantity') is-invalid @enderror" name="stock_quantity" value="{{ old('stock_quantity', $product->stock_quantity) }}" required>
-
-                        @error('stock_quantity')
+                        @error('additional_images.*')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -112,4 +122,89 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const addImageButton = document.getElementById('add-image-button');
+            const additionalImagesContainer = document.getElementById('additional-images-container');
+            const maxImages = 10;
+
+            let imageIndex = {{ $product->images->count() + 1 }};
+
+            addImageButton.addEventListener('click', function() {
+                if (imageIndex >= maxImages) {
+                    return;
+                }
+
+                const imageField = document.createElement('div');
+                imageField.className = 'input-group image-field mt-2';
+
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.className = 'form-control';
+                input.name = 'additional_images[]';
+                input.accept = 'image/*';
+                input.multiple = true;
+
+                const removeButton = document.createElement('button');
+                removeButton.type = 'button';
+                removeButton.className = 'btn btn-outline-danger remove-image-button';
+                removeButton.textContent = 'Remove';
+
+                imageField.appendChild(input);
+                imageField.appendChild(removeButton);
+                additionalImagesContainer.appendChild(imageField);
+
+                imageIndex++;
+            });
+
+            additionalImagesContainer.addEventListener('click', function(event) {
+                if (event.target.classList.contains('remove-image-button')) {
+                    const imageField = event.target.closest('.image-field');
+                    imageField.remove();
+                    imageIndex--;
+                }
+            });
+
+            const deleteAdditionalImageBtns = document.getElementsByClassName('deleteAdditionalImageBtn');
+            for (let i = 0; i < deleteAdditionalImageBtns.length; i++) {
+                deleteAdditionalImageBtns[i].addEventListener('click', function () {
+                    let productImageId = this.getAttribute('data-image-id');
+                    let confirmation = confirm("Are you sure you want to delete this additional image?");
+                    if (confirmation) {
+                        deleteAdditionalImage(productImageId, this);
+                    }
+                });
+            }
+
+            function deleteAdditionalImage(productImageId, buttonElement) {
+                // Отправить AJAX-запрос на удаление изображения
+                const xhr = new XMLHttpRequest();
+
+                xhr.open('DELETE', '{{ route('api.product.image.destroy', ['productImageId' => '/'], false) }}/' + productImageId, true);
+
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        // Изображение успешно удалено
+                        const imageElement = buttonElement.previousElementSibling;
+                        const imageContainer = imageElement.parentNode;
+                        imageContainer.parentNode.removeChild(imageContainer);
+                        imageIndex--;
+
+                        console.log('Additional image deleted successfully.');
+                    } else {
+                        // Возникла ошибка при удалении изображения
+                        console.error('Failed to delete additional image.');
+                    }
+                };
+
+                xhr.onerror = function () {
+                    console.error('Error occurred while deleting additional image.');
+                };
+
+                xhr.send();
+            }
+        });
+    </script>
 @endsection

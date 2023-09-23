@@ -17,8 +17,6 @@ class Product extends Model
         'code',
         'description',
         'image_path',
-        'price',
-        'stock_quantity',
     ];
 
     public static array $sortable = ['id', 'name', 'code', 'created_at', 'updated_at'];

@@ -52,39 +52,17 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="images" class="form-label">{{ __('Images') }}</label>
+                        <label for="additional_images" class="form-label">{{ __('Additional Images') }}</label>
 
-                        <div id="images-container">
+                        <div id="additional-images-container">
                             <div class="input-group image-field">
-                                <input type="file" class="form-control @error('images.*') is-invalid @enderror" name="images[]" accept="image/*" multiple>
+                                <input type="file" class="form-control @error('additional_images.*') is-invalid @enderror" name="additional_images[]" accept="image/*" multiple>
                             </div>
                         </div>
 
                         <button type="button" id="add-image-button" class="btn btn-secondary mt-2">Add Image</button>
 
-                        @error('images.*')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="price" class="form-label">{{ __('Price') }}</label>
-                        <input id="price" type="number" min="0" step="0.01" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ old('price') }}" required>
-
-                        @error('price')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="stock_quantity" class="form-label">{{ __('Stock Quantity') }}</label>
-                        <input id="stock_quantity" type="number" min="0" class="form-control @error('stock_quantity') is-invalid @enderror" name="stock_quantity" value="{{ old('stock_quantity') }}" required>
-
-                        @error('stock_quantity')
+                        @error('additional_images.*')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -120,10 +98,10 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const addImageButton = document.getElementById('add-image-button');
-            const imagesContainer = document.getElementById('images-container');
+            const additionalImagesContainer = document.getElementById('additional-images-container');
             const maxImages = 10;
 
-            let imageIndex = 2;
+            let imageIndex = 1;
 
             addImageButton.addEventListener('click', function() {
                 if (imageIndex >= maxImages) {
@@ -136,7 +114,7 @@
                 const input = document.createElement('input');
                 input.type = 'file';
                 input.className = 'form-control';
-                input.name = 'images[]';
+                input.name = 'additional_images[]';
                 input.accept = 'image/*';
                 input.multiple = true;
 
@@ -147,12 +125,12 @@
 
                 imageField.appendChild(input);
                 imageField.appendChild(removeButton);
-                imagesContainer.appendChild(imageField);
+                additionalImagesContainer.appendChild(imageField);
 
                 imageIndex++;
             });
 
-            imagesContainer.addEventListener('click', function(event) {
+            additionalImagesContainer.addEventListener('click', function(event) {
                 if (event.target.classList.contains('remove-image-button')) {
                     const imageField = event.target.closest('.image-field');
                     imageField.remove();

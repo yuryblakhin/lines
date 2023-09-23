@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\ProductImage\ProductImageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('products')->name('product.')->group(function () {
+    Route::prefix('images')->name('image.')->group(function () {
+        Route::delete('{productImageId}', [ProductImageController::class, 'destroy'])->name('destroy');
+    });
 });
