@@ -24,13 +24,13 @@ class ProductImageController extends Controller
      * Удаление изображения продукта.
      *
      * @param Request $request
-     * @param int $productImageId
+     * @param int $productImage
      * @return JsonResponse
      */
-    public function destroy(Request $request, int $productImageId): JsonResponse
+    public function destroy(Request $request, int $productImage): JsonResponse
     {
         try {
-            $productImage = $this->productImageRepository->findById($productImageId);
+            $productImage = $this->productImageRepository->findById($productImage);
             $this->productImageRepository->destroyProductImage($productImage);
 
             return response()->json(['message' => 'Image deleted successfully']);

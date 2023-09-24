@@ -87,33 +87,36 @@
             <div class="table-responsive">
                 <table class="table card-table table-vcenter text-nowrap datatable">
                     <thead>
-                        <tr>
-                            <th class="w-1">&nbsp;</th>
-                            <th>Warehouse</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Actions</th>
-                        </tr>
+                    <tr>
+                        <th class="w-1">&nbsp;</th>
+                        <th>Warehouse</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Actions</th>
+                    </tr>
                     </thead>
                     <tbody>
                     @foreach ($warehouses as $warehouse)
                         <tr>
                             <td><span class="badge ms-auto {{ $warehouse->getBadgeForActiveStatus() }}"></span></td>
                             <td>{{ $warehouse->name }}</td>
-                            @if ($warehouse->products->contains($product))
-                                @php
-                                    $pivot = $warehouse->products->find($product)->pivot;
-                                @endphp
-                                <td>{{ $pivot->price }}</td>
-                                <td>{{ $pivot->quantity }}</td>
+                            @php
+                                $pivot = $warehouse->products->find($product) ? $warehouse->products->find($product)->pivot : null;
+                            @endphp
+                            <form class="mb-0" method="POST" action="{{ route('api.product.warehouse.update', ['product' => $product->id, 'warehouse' => $warehouse->id], false) }}">
+                                @csrf
+                                @method('PUT')
+
                                 <td>
-                                    <a href="#">Edit</a>
+                                    <input type="number" class="form-control form-control-sm" name="price" value="{{ $pivot ? $pivot->price : '' }}">
                                 </td>
-                            @else
-                                <td>N/A</td>
-                                <td>0</td>
-                                <td></td>
-                            @endif
+                                <td>
+                                    <input type="number" class="form-control form-control-sm" name="quantity" value="{{ $pivot ? $pivot->quantity : '' }}">
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-outline-primary btn-sm">Update</button>
+                                </td>
+                            </form>
                         </tr>
                     @endforeach
                     </tbody>
@@ -121,6 +124,44 @@
             </div>
         </div>
     </div>
+@endsectionё
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const forms = document.querySelectorAll('form');
+            for (let i = 0; i < forms.length; i++) {
+                forms[i].addEventListener('submit', function(event) {
+                    event.preventDefault();
+
+                    let formData = new FormData(this);
+                    let confirmation = confirm('Are you sure you want to update?');
+
+                    if (!confirmation) {
+                        return;
+                    }
+
+                    const _this = this;
+                    const xhr = new XMLHttpRequest();
+
+                    xhr.open('POST', this.action, true);
+
+                    xhr.onload = function() {
+                        if (xhr.status === 200) {
+                            console.log('Changes saved successfully.');
+                        } else {
+                            console.error('An error occurred while saving changes.');
+                        }
+                    };
+
+                    xhr.onerror = function () {
+                        console.error('Error occurred while deleting image.');
+                    };
+
+                    xhr.send(formData);
+                });
+            }
+        });
+    </script>
 @endsection
 @section('actionButtons')
     <div class="btn-list">

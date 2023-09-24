@@ -169,40 +169,39 @@
             const deleteImageBtns = document.getElementsByClassName('deleteImageBtn');
             for (let i = 0; i < deleteImageBtns.length; i++) {
                 deleteImageBtns[i].addEventListener('click', function () {
-                    let productImageId = this.getAttribute('data-image-id');
+                    let productImage = this.getAttribute('data-image-id');
                     let confirmation = confirm("Are you sure you want to delete this image?");
-                    if (confirmation) {
-                        deleteImage(productImageId, this);
+
+                    if (!confirmation) {
+                        return;
                     }
+
+                    const _this = this;
+                    const xhr = new XMLHttpRequest();
+
+                    xhr.open('DELETE', '{{ route('api.product.image.destroy', ['productImage' => '/'], false) }}/' + productImage, true);
+
+                    xhr.onload = function () {
+                        if (xhr.status === 200) {
+                            // Изображение успешно удалено
+                            const imageElement = _this.previousElementSibling;
+                            const imageContainer = imageElement.parentNode;
+                            imageContainer.parentNode.removeChild(imageContainer);
+                            imageIndex--;
+
+                            console.log('Image deleted successfully.');
+                        } else {
+                            // Возникла ошибка при удалении изображения
+                            console.error('Failed to delete image.');
+                        }
+                    };
+
+                    xhr.onerror = function () {
+                        console.error('Error occurred while deleting image.');
+                    };
+
+                    xhr.send();
                 });
-            }
-
-            function deleteImage(productImageId, buttonElement) {
-                // Отправить AJAX-запрос на удаление изображения
-                const xhr = new XMLHttpRequest();
-
-                xhr.open('DELETE', '{{ route('api.product.image.destroy', ['productImageId' => '/'], false) }}/' + productImageId, true);
-
-                xhr.onload = function () {
-                    if (xhr.status === 200) {
-                        // Изображение успешно удалено
-                        const imageElement = buttonElement.previousElementSibling;
-                        const imageContainer = imageElement.parentNode;
-                        imageContainer.parentNode.removeChild(imageContainer);
-                        imageIndex--;
-
-                        console.log('Image deleted successfully.');
-                    } else {
-                        // Возникла ошибка при удалении изображения
-                        console.error('Failed to delete image.');
-                    }
-                };
-
-                xhr.onerror = function () {
-                    console.error('Error occurred while deleting image.');
-                };
-
-                xhr.send();
             }
         });
     </script>
