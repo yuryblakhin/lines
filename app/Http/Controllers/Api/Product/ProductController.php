@@ -33,7 +33,7 @@ class ProductController extends Controller
      * @param int $product
      * @return JsonResponse
      */
-    public function updateQuantity(ProductUpdateQuantityRequest $request, int $product, int $warehouse): JsonResponse
+    public function updateWarehouse(ProductUpdateQuantityRequest $request, int $product, int $warehouse): JsonResponse
     {
         try {
             $data = $request->validated();
@@ -41,7 +41,7 @@ class ProductController extends Controller
             $product = $this->productRepository->findById($product);
             $warehouse = $this->warehouseRepository->findById($warehouse);
 
-            $this->productRepository->updateQuantity($product, $warehouse, $data);
+            $this->productRepository->updateWarehouseDetails($product, $warehouse, $data);
 
             return response()->json(['message' => 'Updated successfully']);
         } catch (Throwable $exception) {

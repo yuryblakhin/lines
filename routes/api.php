@@ -20,6 +20,6 @@ Route::prefix('products')->name('product.')->group(function () {
         Route::delete('{productImage}', [ProductImageController::class, 'destroy'])->name('destroy');
     });
     Route::name('warehouse.')->group(function () {
-        Route::put('{product}/warehouses/{warehouse}', [ProductController::class, 'updateQuantity'])->name('update.quantity');
+        Route::put('{product}/warehouses/{warehouse}', [ProductController::class, 'updateWarehouse'])->name('update.warehouse');
     });
 });

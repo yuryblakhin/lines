@@ -19,5 +19,5 @@ interface ProductRepositoryContract
 
     public function findById(int $id): object;
 
-    public function updateQuantity(Product $product, Warehouse $warehouse, array $data): void;
+    public function updateWarehouseDetails(Product $product, Warehouse $warehouse, array $data): void;
 }

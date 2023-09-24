@@ -138,7 +138,7 @@ class ProductRepository implements ProductRepositoryContract
         return $product;
     }
 
-    public function updateQuantity(Product $product, Warehouse $warehouse, array $data): void
+    public function updateWarehouseDetails(Product $product, Warehouse $warehouse, array $data): void
     {
         DB::beginTransaction();
 
