@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Contracts\Product;
 
 use App\Models\Product;
+use App\Models\Warehouse;
 
 interface ProductRepositoryContract
 {
@@ -17,4 +18,6 @@ interface ProductRepositoryContract
     public function destroyProduct(Product $product): void;
 
     public function findById(int $id): object;
+
+    public function updateQuantity(Product $product, Warehouse $warehouse, array $data): void;
 }

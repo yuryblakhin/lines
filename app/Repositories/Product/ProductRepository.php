@@ -7,6 +7,7 @@ namespace App\Repositories\Product;
 use App\Contracts\Product\ProductRepositoryContract;
 use App\Enums\SortDirectionEnum;
 use App\Models\Product;
+use App\Models\Warehouse;
 use App\Services\FileUploadService;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -135,5 +136,25 @@ class ProductRepository implements ProductRepositoryContract
         }
 
         return $product;
+    }
+
+    public function updateQuantity(Product $product, Warehouse $warehouse, array $data): void
+    {
+        DB::beginTransaction();
+
+        try {
+            $quantity = $data['quantity'];
+            $price = $data['price'];
+
+            $product->warehouses()->syncWithoutDetaching([
+                $warehouse->id => ['quantity' => $quantity, 'price' => $price],
+            ]);
+
+            DB::commit();
+        } catch (Throwable $exception) {
+            DB::rollback();
+
+            throw new Exception($exception->getMessage());
+        }
     }
 }

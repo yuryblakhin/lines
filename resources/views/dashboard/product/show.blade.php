@@ -103,15 +103,15 @@
                             @php
                                 $pivot = $warehouse->products->find($product) ? $warehouse->products->find($product)->pivot : null;
                             @endphp
-                            <form class="mb-0" method="POST" action="{{ route('api.product.warehouse.update', ['product' => $product->id, 'warehouse' => $warehouse->id], false) }}">
+                            <form class="mb-0" method="POST" action="{{ route('api.product.warehouse.update.quantity', ['product' => $product->id, 'warehouse' => $warehouse->id], false) }}">
                                 @csrf
                                 @method('PUT')
 
                                 <td>
-                                    <input type="number" class="form-control form-control-sm" name="price" value="{{ $pivot ? $pivot->price : '' }}">
+                                    <input type="number" class="form-control form-control-sm" name="price" value="{{ $pivot ? $pivot->price : 0 }}">
                                 </td>
                                 <td>
-                                    <input type="number" class="form-control form-control-sm" name="quantity" value="{{ $pivot ? $pivot->quantity : '' }}">
+                                    <input type="number" class="form-control form-control-sm" name="quantity" value="{{ $pivot ? $pivot->quantity : 0 }}">
                                 </td>
                                 <td>
                                     <button type="submit" class="btn btn-outline-primary btn-sm">Update</button>
@@ -124,7 +124,7 @@
             </div>
         </div>
     </div>
-@endsectionё
+@endsection
 @section('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
