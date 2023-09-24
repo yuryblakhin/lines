@@ -128,7 +128,7 @@ class ProductRepository implements ProductRepositoryContract
 
     public function findById(int $id): object
     {
-        $product = Product::with('categories')->where('id', $id)->first();
+        $product = Product::with(['categories', 'warehouses'])->where('id', $id)->first();
 
         if (!$product) {
             throw new ModelNotFoundException();

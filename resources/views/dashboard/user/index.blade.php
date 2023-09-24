@@ -8,10 +8,10 @@
                     <thead>
                         <tr>
                             <th class="w-1">ID</th>
+                            <th>&nbsp;</th>
                             <th>Email</th>
                             <th>First Name</th>
                             <th>Last Name</th>
-                            <th>Active</th>
                             <th>Created At</th>
                             <th>Updated At</th>
                             <th>&nbsp;</th>
@@ -26,10 +26,10 @@
                         @foreach ($users as $user)
                             <tr>
                                 <td><span class="text-secondary">{{ $user->id }}</span></td>
+                                <td><span class="badge ms-auto {{ $user->getBadgeForActiveStatus() }}"></span></td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->first_name }}</td>
                                 <td>{{ $user->last_name }}</td>
-                                <td><span class="badge ms-auto {{ $user->getBadgeForActiveStatus() }}"></span></td>
                                 <td>{{ $user->created_at }}</td>
                                 <td>{{ $user->updated_at }}</td>
                                 <td>

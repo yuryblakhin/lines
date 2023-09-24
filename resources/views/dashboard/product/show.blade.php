@@ -1,7 +1,6 @@
 @extends('layouts.dashboard')
 
 @section('content')
-
     <div class="col-md-6">
         <div class="card">
             <div id="productCarusel" class="carousel slide" data-bs-ride="carousel">
@@ -80,6 +79,45 @@
                         <div class="datagrid-content">{{ $product->updated_at }}</div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table card-table table-vcenter text-nowrap datatable">
+                    <thead>
+                        <tr>
+                            <th class="w-1">&nbsp;</th>
+                            <th>Warehouse</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($warehouses as $warehouse)
+                        <tr>
+                            <td><span class="badge ms-auto {{ $warehouse->getBadgeForActiveStatus() }}"></span></td>
+                            <td>{{ $warehouse->name }}</td>
+                            @if ($warehouse->products->contains($product))
+                                @php
+                                    $pivot = $warehouse->products->find($product)->pivot;
+                                @endphp
+                                <td>{{ $pivot->price }}</td>
+                                <td>{{ $pivot->quantity }}</td>
+                                <td>
+                                    <a href="#">Edit</a>
+                                </td>
+                            @else
+                                <td>N/A</td>
+                                <td>0</td>
+                                <td></td>
+                            @endif
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

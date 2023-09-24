@@ -8,11 +8,11 @@
                     <thead>
                         <tr>
                             <th class="w-1">ID</th>
+                            <th>&nbsp;</th>
                             <th>Name</th>
                             <th>Code</th>
                             <th>Parent</th>
                             <th>Description</th>
-                            <th>Active</th>
                             <th>Created At</th>
                             <th>Updated At</th>
                             <th>&nbsp;</th>
@@ -27,11 +27,11 @@
                         @foreach ($categories as $category)
                             <tr>
                                 <td><span class="text-secondary">{{ $category->id }}</span></td>
+                                <td><span class="badge ms-auto {{ $category->getBadgeForActiveStatus() }}"></span></td>
                                 <td>{{ $category->name }}</td>
                                 <td>{{ $category->code }}</td>
                                 <td>{{ $category->parent ? $category->parent->name : '—' }}</td>
                                 <td>{{ $category->description }}</td>
-                                <td><span class="badge ms-auto {{ $category->getBadgeForActiveStatus() }}"></span></td>
                                 <td>{{ $category->created_at }}</td>
                                 <td>{{ $category->updated_at }}</td>
                                 <td>

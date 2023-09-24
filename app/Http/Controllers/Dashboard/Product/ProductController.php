@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\ProductStoreRequest;
 use App\Http\Requests\Product\ProductUpdateRequest;
 use App\Models\Category;
+use App\Models\Warehouse;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -117,12 +118,14 @@ class ProductController extends Controller
     {
         try {
             $product = $this->productRepository->findById($productId);
+            $warehouses = Warehouse::all();
 
             $this->setTemplate('dashboard.product.show');
             $this->setTitle(__('messages.dashboard.product.show.title'));
             $this->setDescription(__('messages.dashboard.product.show.description'));
             $this->setTemplateData([
                 'product' => $product,
+                'warehouses' => $warehouses,
             ]);
 
             return $this->renderTemplate();

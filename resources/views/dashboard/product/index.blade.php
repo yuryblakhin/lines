@@ -8,12 +8,12 @@
                     <thead>
                         <tr>
                             <th class="w-1">ID</th>
+                            <th>&nbsp;</th>
                             <th>Image</th>
                             <th>Name</th>
                             <th>Code</th>
                             <th>Categories</th>
                             <th>Description</th>
-                            <th>Active</th>
                             <th>Created At</th>
                             <th>Updated At</th>
                             <th>&nbsp;</th>
@@ -29,12 +29,12 @@
                         @foreach ($products as $product)
                             <tr>
                                 <td><span class="text-secondary">{{ $product->id }}</span></td>
+                                <td><span class="badge ms-auto {{ $product->getBadgeForActiveStatus() }}"></span></td>
                                 <td><img class="avatar avatar-xl" src="{{ $product->getImagePath() }}" alt="{{ $product->name }}"></td>
                                 <td><a href="{{ route('dashboard.product.show', ['product' => $product->id], false) }}">{{ $product->name }}</a></td>
                                 <td>{{ $product->code }}</td>
                                 <td>{{ $product->getCategoryNames() }}</td>
                                 <td>{{ $product->description }}</td>
-                                <td><span class="badge ms-auto {{ $product->getBadgeForActiveStatus() }}"></span></td>
                                 <td>{{ $product->created_at }}</td>
                                 <td>{{ $product->updated_at }}</td>
                                 <td>
