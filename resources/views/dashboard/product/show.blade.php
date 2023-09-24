@@ -1,0 +1,97 @@
+@extends('layouts.dashboard')
+
+@section('content')
+
+    <div class="col-md-6">
+        <div class="card">
+            <div id="productCarusel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @if ($product->image_path)
+                        <div class="carousel-item active">
+                            <img src="{{ $product->getImagePath() }}" class="d-block w-100" alt="{{ $product->name }}">
+                        </div>
+                    @endif
+                    @if ($product->images->count() > 0)
+                        @foreach ($product->images as $image)
+                            <div class="carousel-item">
+                                <img src="{{ $image->getImagePath() }}" class="d-block w-100" alt="Additional Image">
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+                @if ($product->image_path || $product->images->count() > 1)
+                    <button class="carousel-control-prev" type="button" data-bs-target="#productCarusel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#productCarusel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                @endif
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="datagrid">
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">ID</div>
+                        <div class="datagrid-content">{{ $product->id }}</div>
+                    </div>
+
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">Active</div>
+                        <div class="datagrid-content">
+                            <span class="badge ms-auto {{ $product->getBadgeForActiveStatus() }}"></span>
+                        </div>
+                    </div>
+
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">Name</div>
+                        <div class="datagrid-content">{{ $product->name }}</div>
+                    </div>
+
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">Code</div>
+                        <div class="datagrid-content">{{ $product->code }}</div>
+                    </div>
+
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">Description</div>
+                        <div class="datagrid-content">{{ $product->description }}</div>
+                    </div>
+
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">Categories</div>
+                        <div class="datagrid-content">
+                            {{ $product->getCategoryNames() }}
+                        </div>
+                    </div>
+
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">Created At</div>
+                        <div class="datagrid-content">{{ $product->created_at }}</div>
+                    </div>
+
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">Updated At</div>
+                        <div class="datagrid-content">{{ $product->updated_at }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+@section('actionButtons')
+    <div class="btn-list">
+        <a class="btn btn-primary d-none d-sm-inline-block" href="{{ route('dashboard.product.create') }}">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M12 5l0 14"></path>
+                <path d="M5 12l14 0"></path>
+            </svg> Create
+        </a>
+    </div>
+@endsection

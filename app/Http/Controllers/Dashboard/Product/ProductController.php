@@ -103,6 +103,35 @@ class ProductController extends Controller
     }
 
     /**
+     * Отображает полную информацию о указанном продукте.
+     *
+     * @param Request $request Запрос, содержащий параметры и данные запроса.
+     * @param int $productId Идентификатор продукта или объект продукта.
+     *
+     * @return View|Exception Представление для отображения страницы с информацией о продукте
+     * или исключение, если возникла ошибка.
+     *
+     * @throws Exception Если возникла ошибка при выполнении операции.
+     */
+    public function show(Request $request, int $productId): View|Exception
+    {
+        try {
+            $product = $this->productRepository->findById($productId);
+
+            $this->setTemplate('dashboard.product.show');
+            $this->setTitle(__('messages.dashboard.product.show.title'));
+            $this->setDescription(__('messages.dashboard.product.show.description'));
+            $this->setTemplateData([
+                'product' => $product,
+            ]);
+
+            return $this->renderTemplate();
+        } catch (Throwable $exception) {
+            throw new Exception($exception->getMessage(), $exception->getCode(), $exception);
+        }
+    }
+
+    /**
      * Отображает страницу с информацией о продукте.
      *
      * @param Request $request Запрос, содержащий параметры и данные запроса.

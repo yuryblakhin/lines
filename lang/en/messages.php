@@ -81,6 +81,10 @@ return [
             'store' => [
                 'redirect' => 'Category data has been successfully created!'
             ],
+            'show' => [
+                'title' => 'Show Product',
+                'description' => 'Manage your products',
+            ],
             'edit' => [
                 'title' => 'Edit Product',
                 'description' => 'Manage your products',

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Warehouse;
 
+use App\Rules\NullableStringRule;
 use App\Rules\Warehouse\WarehouseUniqueCodeRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -34,7 +35,7 @@ class WarehouseStoreRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'code' => ['required', 'string', 'max:255', new WarehouseUniqueCodeRule()],
-            'address' => ['string', 'max:1024'],
+            'address' => [new NullableStringRule(),  'max:1024'],
             'phones' => ['array'],
             'phones.*' => ['string'],
             'active' => ['required', 'boolean'],

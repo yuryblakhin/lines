@@ -62,6 +62,5 @@
             </svg> Create
         </a>
     </div>
-
 @endsection
 

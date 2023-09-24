@@ -1,2 +1,6 @@
 // tabler
 @import '~@tabler/core/src/scss/tabler';
+
+.datagrid {
+    --tblr-datagrid-item-width: unset;
+}

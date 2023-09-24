@@ -30,7 +30,7 @@
                             <tr>
                                 <td><span class="text-secondary">{{ $product->id }}</span></td>
                                 <td><img class="avatar avatar-xl" src="{{ $product->getImagePath() }}" alt="{{ $product->name }}"></td>
-                                <td>{{ $product->name }}</td>
+                                <td><a href="{{ route('dashboard.product.show', ['product' => $product->id], false) }}">{{ $product->name }}</a></td>
                                 <td>{{ $product->code }}</td>
                                 <td>{{ $product->getCategoryNames() }}</td>
                                 <td>{{ $product->description }}</td>
@@ -67,6 +67,5 @@
             </svg> Create
         </a>
     </div>
-
 @endsection
 
