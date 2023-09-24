@@ -27,19 +27,44 @@ class ProductController extends Controller
     }
 
     /**
-     * Удаление изображения продукта.
+     * Удаляет дополнительную картинку продукта.
      *
      * @param Request $request
-     * @param int $product
+     * @param int $productId
+     * @param int $imageId
      * @return JsonResponse
+     *
+     * @throws Throwable
      */
-    public function updateWarehouse(ProductUpdateQuantityRequest $request, int $product, int $warehouse): JsonResponse
+    public function destroyImage(Request $request, int $productId, int $imageId): JsonResponse
+    {
+        try {
+            $product = $this->productRepository->findById($productId);
+            $this->productRepository->destroyImage($product, $imageId);
+
+            return response()->json(['message' => 'Image deleted successfully']);
+        } catch (Throwable $exception) {
+            return response()->json(['message' => $exception->getMessage()], $exception->getCode());
+        }
+    }
+
+    /**
+     * Обновляет детали склада для продукта.
+     *
+     * @param ProductUpdateQuantityRequest $request
+     * @param int $productId
+     * @param int $warehouseId
+     * @return JsonResponse
+     *
+     * @throws Throwable
+     */
+    public function updateWarehouse(ProductUpdateQuantityRequest $request, int $productId, int $warehouseId): JsonResponse
     {
         try {
             $data = $request->validated();
 
-            $product = $this->productRepository->findById($product);
-            $warehouse = $this->warehouseRepository->findById($warehouse);
+            $product = $this->productRepository->findById($productId);
+            $warehouse = $this->warehouseRepository->findById($warehouseId);
 
             $this->productRepository->updateWarehouseDetails($product, $warehouse, $data);
 

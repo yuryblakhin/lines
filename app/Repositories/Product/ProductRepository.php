@@ -138,6 +138,33 @@ class ProductRepository implements ProductRepositoryContract
         return $product;
     }
 
+    public function findImageById(Product $product, int $id): object
+    {
+        $productImage = $product->images()->where('id', $id)->first();
+
+        if (!$productImage) {
+            throw new ModelNotFoundException();
+        }
+
+        return $productImage;
+    }
+
+    public function destroyImage(Product $product, int $imageId): void
+    {
+        DB::beginTransaction();
+
+        try {
+            $image = $product->images()->where('id', $imageId)->firstOrFail();
+            $image->delete();
+
+            DB::commit();
+        } catch (Throwable $exception) {
+            DB::rollback();
+
+            throw new Exception($exception->getMessage());
+        }
+    }
+
     public function updateWarehouseDetails(Product $product, Warehouse $warehouse, array $data): void
     {
         DB::beginTransaction();

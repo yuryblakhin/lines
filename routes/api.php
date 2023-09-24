@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Api\Product\ProductController;
-use App\Http\Controllers\Api\ProductImage\ProductImageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,10 +15,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('products')->name('product.')->group(function () {
-    Route::prefix('images')->name('image.')->group(function () {
-        Route::delete('{productImage}', [ProductImageController::class, 'destroy'])->name('destroy');
+    Route::name('image.')->group(function () {
+        Route::delete('{product}/images/{image}', [ProductController::class, 'destroyImage'])->name('destroy');
     });
     Route::name('warehouse.')->group(function () {
-        Route::put('{product}/warehouses/{warehouse}', [ProductController::class, 'updateWarehouse'])->name('update.warehouse');
+        Route::put('{product}/warehouses/{warehouse}', [ProductController::class, 'updateWarehouse'])->name('update');
     });
 });

@@ -19,5 +19,7 @@ interface ProductRepositoryContract
 
     public function findById(int $id): object;
 
+    public function destroyImage(Product $product, int $imageId): void;
+
     public function updateWarehouseDetails(Product $product, Warehouse $warehouse, array $data): void;
 }

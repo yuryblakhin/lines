@@ -103,7 +103,7 @@
                             @php
                                 $pivot = $warehouse->products->find($product) ? $warehouse->products->find($product)->pivot : null;
                             @endphp
-                            <form class="mb-0" method="POST" action="{{ route('api.product.warehouse.update.warehouse', ['product' => $product->id, 'warehouse' => $warehouse->id], false) }}">
+                            <form class="mb-0" method="POST" action="{{ route('api.product.warehouse.update', ['product' => $product->id, 'warehouse' => $warehouse->id], false) }}">
                                 @csrf
                                 @method('PUT')
 
