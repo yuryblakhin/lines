@@ -40,7 +40,8 @@ class ProductController extends Controller
     {
         try {
             $product = $this->productRepository->findById($productId);
-            $this->productRepository->destroyImage($product, $imageId);
+            $productImage = $this->productRepository->findProductImageById($product, $imageId);
+            $this->productRepository->destroyProductImage($productImage);
 
             return response()->json(['message' => 'Image deleted successfully']);
         } catch (Throwable $exception) {
@@ -66,7 +67,7 @@ class ProductController extends Controller
             $product = $this->productRepository->findById($productId);
             $warehouse = $this->warehouseRepository->findById($warehouseId);
 
-            $this->productRepository->updateWarehouseDetails($product, $warehouse, $data);
+            $this->productRepository->updateProductWarehouseDetails($product, $warehouse, $data);
 
             return response()->json(['message' => 'Updated successfully']);
         } catch (Throwable $exception) {

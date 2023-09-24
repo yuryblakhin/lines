@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Contracts\Product;
 
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Models\Warehouse;
 
 interface ProductRepositoryContract
@@ -19,7 +20,9 @@ interface ProductRepositoryContract
 
     public function findById(int $id): object;
 
-    public function destroyImage(Product $product, int $imageId): void;
+    public function findProductImageById(Product $product, int $id): object;
 
-    public function updateWarehouseDetails(Product $product, Warehouse $warehouse, array $data): void;
+    public function destroyProductImage(ProductImage $productIMage): void;
+
+    public function updateProductWarehouseDetails(Product $product, Warehouse $warehouse, array $data): void;
 }

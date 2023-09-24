@@ -7,6 +7,7 @@ namespace App\Repositories\Product;
 use App\Contracts\Product\ProductRepositoryContract;
 use App\Enums\SortDirectionEnum;
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Models\Warehouse;
 use App\Services\FileUploadService;
 use Exception;
@@ -138,7 +139,7 @@ class ProductRepository implements ProductRepositoryContract
         return $product;
     }
 
-    public function findImageById(Product $product, int $id): object
+    public function findProductImageById(Product $product, int $id): object
     {
         $productImage = $product->images()->where('id', $id)->first();
 
@@ -149,13 +150,12 @@ class ProductRepository implements ProductRepositoryContract
         return $productImage;
     }
 
-    public function destroyImage(Product $product, int $imageId): void
+    public function destroyProductImage(ProductImage $productImage): void
     {
         DB::beginTransaction();
 
         try {
-            $image = $product->images()->where('id', $imageId)->firstOrFail();
-            $image->delete();
+            $productImage->delete();
 
             DB::commit();
         } catch (Throwable $exception) {
@@ -165,7 +165,7 @@ class ProductRepository implements ProductRepositoryContract
         }
     }
 
-    public function updateWarehouseDetails(Product $product, Warehouse $warehouse, array $data): void
+    public function updateProductWarehouseDetails(Product $product, Warehouse $warehouse, array $data): void
     {
         DB::beginTransaction();
 
