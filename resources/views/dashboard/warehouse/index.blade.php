@@ -12,6 +12,7 @@
                             <th>Name</th>
                             <th>Address</th>
                             <th>Phones</th>
+                            <th>Active</th>
                             <th>Created At</th>
                             <th>Updated At</th>
                             <th>&nbsp;</th>
@@ -20,7 +21,7 @@
                     <tbody>
                     @if ($warehouses->isEmpty())
                         <tr>
-                            <td colspan="8">No warehouses found</td>
+                            <td colspan="9">No warehouses found</td>
                         </tr>
                     @else
                         @foreach ($warehouses as $warehouse)
@@ -30,6 +31,7 @@
                                 <td>{{ $warehouse->name }}</td>
                                 <td>{{ $warehouse->address }}</td>
                                 <td>{{ $warehouse->getPhones() }}</td>
+                                <td><span class="badge ms-auto {{ $warehouse->getBadgeForActiveStatus() }}"></span></td>
                                 <td>{{ $warehouse->created_at }}</td>
                                 <td>{{ $warehouse->updated_at }}</td>
                                 <td>

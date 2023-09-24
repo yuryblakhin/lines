@@ -36,4 +36,9 @@ class Warehouse extends Model
             ->withPivot('quantity', 'price')
             ->withTimestamps();
     }
+
+    public function getBadgeForActiveStatus(): string
+    {
+        return $this->active ? 'bg-green' : 'bg-red';
+    }
 }

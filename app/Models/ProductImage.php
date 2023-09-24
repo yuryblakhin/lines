@@ -33,4 +33,9 @@ class ProductImage extends Model
     {
         return Storage::disk(config('filesystems.default'))->url($this->image_path);
     }
+
+    public function getBadgeForActiveStatus(): string
+    {
+        return $this->active ? 'bg-green' : 'bg-red';
+    }
 }

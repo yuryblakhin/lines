@@ -11,6 +11,7 @@
                             <th>Email</th>
                             <th>First Name</th>
                             <th>Last Name</th>
+                            <th>Active</th>
                             <th>Created At</th>
                             <th>Updated At</th>
                             <th>&nbsp;</th>
@@ -19,7 +20,7 @@
                     <tbody>
                     @if ($users->isEmpty())
                         <tr>
-                            <td colspan="7">No users found</td>
+                            <td colspan="8">No users found</td>
                         </tr>
                     @else
                         @foreach ($users as $user)
@@ -28,6 +29,7 @@
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->first_name }}</td>
                                 <td>{{ $user->last_name }}</td>
+                                <td><span class="badge ms-auto {{ $user->getBadgeForActiveStatus() }}"></span></td>
                                 <td>{{ $user->created_at }}</td>
                                 <td>{{ $user->updated_at }}</td>
                                 <td>

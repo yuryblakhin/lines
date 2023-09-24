@@ -47,4 +47,9 @@ class User extends Authenticatable
     }
 
     public static array $sortable = ['id', 'email', 'created_at', 'updated_at'];
+
+    public function getBadgeForActiveStatus(): string
+    {
+        return $this->active ? 'bg-green' : 'bg-red';
+    }
 }

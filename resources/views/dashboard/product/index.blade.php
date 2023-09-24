@@ -13,6 +13,7 @@
                             <th>Code</th>
                             <th>Categories</th>
                             <th>Description</th>
+                            <th>Active</th>
                             <th>Created At</th>
                             <th>Updated At</th>
                             <th>&nbsp;</th>
@@ -22,7 +23,7 @@
 
                     @if ($products->isEmpty())
                         <tr>
-                            <td colspan="9">No products found</td>
+                            <td colspan="10">No products found</td>
                         </tr>
                     @else
                         @foreach ($products as $product)
@@ -33,6 +34,7 @@
                                 <td>{{ $product->code }}</td>
                                 <td>{{ $product->getCategoryNames() }}</td>
                                 <td>{{ $product->description }}</td>
+                                <td><span class="badge ms-auto {{ $product->getBadgeForActiveStatus() }}"></span></td>
                                 <td>{{ $product->created_at }}</td>
                                 <td>{{ $product->updated_at }}</td>
                                 <td>

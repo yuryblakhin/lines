@@ -12,6 +12,7 @@
                             <th>Code</th>
                             <th>Parent</th>
                             <th>Description</th>
+                            <th>Active</th>
                             <th>Created At</th>
                             <th>Updated At</th>
                             <th>&nbsp;</th>
@@ -20,7 +21,7 @@
                     <tbody>
                     @if ($categories->isEmpty())
                         <tr>
-                            <td colspan="8">No categories found</td>
+                            <td colspan="9">No categories found</td>
                         </tr>
                     @else
                         @foreach ($categories as $category)
@@ -30,6 +31,7 @@
                                 <td>{{ $category->code }}</td>
                                 <td>{{ $category->parent ? $category->parent->name : '—' }}</td>
                                 <td>{{ $category->description }}</td>
+                                <td><span class="badge ms-auto {{ $category->getBadgeForActiveStatus() }}"></span></td>
                                 <td>{{ $category->created_at }}</td>
                                 <td>{{ $category->updated_at }}</td>
                                 <td>

@@ -13,10 +13,10 @@
                     <a class="nav-link" href="{{ route('dashboard.home.index', [], false) }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dashboard" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                               <path d="M12 13m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
-                               <path d="M13.45 11.55l2.05 -2.05"></path>
-                               <path d="M6.4 20a9 9 0 1 1 11.2 0z"></path>
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M12 13m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                                <path d="M13.45 11.55l2.05 -2.05"></path>
+                                <path d="M6.4 20a9 9 0 1 1 11.2 0z"></path>
                             </svg>
                         </span>
                         <span class="nav-link-title">Dashboard</span>
@@ -26,10 +26,10 @@
                     <a class="nav-link" href="{{ route('dashboard.warehouse.index', [], false) }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-warehouse" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                               <path d="M3 21v-13l9 -4l9 4v13"></path>
-                               <path d="M13 13h4v8h-10v-6h6"></path>
-                               <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3"></path>
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M3 21v-13l9 -4l9 4v13"></path>
+                                <path d="M13 13h4v8h-10v-6h6"></path>
+                                <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3"></path>
                             </svg>
                         </span>
                         <span class="nav-link-title">Warehouses</span>
@@ -39,12 +39,12 @@
                     <a class="nav-link" href="{{ route('dashboard.product.index', [], false) }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-store" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                               <path d="M3 21l18 0"></path>
-                               <path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4"></path>
-                               <path d="M5 21l0 -10.15"></path>
-                               <path d="M19 21l0 -10.15"></path>
-                               <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4"></path>
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M3 21l18 0"></path>
+                                <path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4"></path>
+                                <path d="M5 21l0 -10.15"></path>
+                                <path d="M19 21l0 -10.15"></path>
+                                <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4"></path>
                             </svg>
                         </span>
                         <span class="nav-link-title">Products</span>
@@ -54,11 +54,11 @@
                     <a class="nav-link" href="{{ route('dashboard.category.index', [], false) }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-category" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                               <path d="M4 4h6v6h-6z"></path>
-                               <path d="M14 4h6v6h-6z"></path>
-                               <path d="M4 14h6v6h-6z"></path>
-                               <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M4 4h6v6h-6z"></path>
+                                <path d="M14 4h6v6h-6z"></path>
+                                <path d="M4 14h6v6h-6z"></path>
+                                <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
                             </svg>
                         </span>
                         <span class="nav-link-title">Categories</span>
@@ -83,10 +83,10 @@
                         document.getElementById('logout-form').submit();">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                               <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"></path>
-                               <path d="M9 12h12l-3 -3"></path>
-                               <path d="M18 15l3 -3"></path>
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"></path>
+                                <path d="M9 12h12l-3 -3"></path>
+                                <path d="M18 15l3 -3"></path>
                             </svg>
                         </span>
                         {{ __('Logout') }}
