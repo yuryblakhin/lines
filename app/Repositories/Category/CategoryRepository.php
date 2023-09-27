@@ -23,7 +23,7 @@ class CategoryRepository implements CategoryRepositoryContract
 
         $sortDirection = (string) isset($data['sort_direction'])
             ? SortDirectionEnum::tryFrom($data['sort_direction'])->value ?? 'desc'
-            : 'desc';
+            : 'asc';
 
         return Category::orderBy($sortBy, $sortDirection)
             ->paginate($perPage)

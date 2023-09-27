@@ -33,7 +33,7 @@ class ProductRepository implements ProductRepositoryContract
 
         $sortDirection = (string) isset($data['sort_direction'])
             ? SortDirectionEnum::tryFrom($data['sort_direction'])->value ?? 'desc'
-            : 'desc';
+            : 'asc';
 
         return Product::with('categories')->orderBy($sortBy, $sortDirection)
             ->paginate($perPage)

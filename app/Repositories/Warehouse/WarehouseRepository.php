@@ -23,7 +23,7 @@ class WarehouseRepository implements WarehouseRepositoryContract
 
         $sortDirection = (string) isset($data['sort_direction'])
             ? SortDirectionEnum::tryFrom($data['sort_direction'])->value ?? 'desc'
-            : 'desc';
+            : 'asc';
 
         return Warehouse::orderBy($sortBy, $sortDirection)
             ->paginate($perPage)

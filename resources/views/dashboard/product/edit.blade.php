@@ -44,6 +44,17 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="sku" class="form-label">{{ __('SKU') }}</label>
+                        <input id="sku" type="text" class="form-control @error('sku') is-invalid @enderror" name="sku" value="{{ old('sku', $product->sku) }}" required autocomplete="sku">
+
+                        @error('sku')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
                         <label for="description" class="form-label">{{ __('Description') }}</label>
                         <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description" required>{{ old('description', $product->description) }}</textarea>
 

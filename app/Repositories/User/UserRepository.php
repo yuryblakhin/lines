@@ -23,7 +23,7 @@ class UserRepository implements UserRepositoryContract
 
         $sortDirection = (string) isset($data['sort_direction'])
             ? SortDirectionEnum::tryFrom($data['sort_direction'])->value ?? 'desc'
-            : 'desc';
+            : 'asc';
 
         return User::orderBy($sortBy, $sortDirection)
             ->paginate($perPage)

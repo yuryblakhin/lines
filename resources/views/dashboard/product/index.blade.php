@@ -12,8 +12,8 @@
                             <th>Image</th>
                             <th>Name</th>
                             <th>Code</th>
+                            <th>SKU</th>
                             <th>Categories</th>
-                            <th>Description</th>
                             <th>Created At</th>
                             <th>Updated At</th>
                             <th>&nbsp;</th>
@@ -33,8 +33,8 @@
                                 <td><img class="avatar avatar-xl" src="{{ $product->getImagePath() }}" alt="{{ $product->name }}"></td>
                                 <td><a href="{{ route('dashboard.product.show', ['product' => $product->id], false) }}">{{ $product->name }}</a></td>
                                 <td>{{ $product->code }}</td>
+                                <td>{{ $product->sku }}</td>
                                 <td>{{ $product->getCategoryNames() }}</td>
-                                <td>{{ $product->description }}</td>
                                 <td>{{ $product->created_at }}</td>
                                 <td>{{ $product->updated_at }}</td>
                                 <td>

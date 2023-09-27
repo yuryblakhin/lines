@@ -41,6 +41,7 @@ class ProductStoreRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'code' => ['required', 'string', 'max:255', new ProductUniqueCodeRule()],
+            'sku' => [new NullableStringRule(), 'max:255'],
             'description' => [new NullableStringRule(), 'max:1024'],
             'image' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
             'images' => ['array'],

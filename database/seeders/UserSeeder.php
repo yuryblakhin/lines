@@ -8,7 +8,7 @@ use App\Contracts\User\UserRepositoryContract;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class UserDemoSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     protected UserRepositoryContract $userRepository;
 
