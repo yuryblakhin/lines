@@ -58,6 +58,11 @@
                     </div>
 
                     <div class="datagrid-item">
+                        <div class="datagrid-title">SKU</div>
+                        <div class="datagrid-content">{{ $product->sku }}</div>
+                    </div>
+
+                    <div class="datagrid-item">
                         <div class="datagrid-title">Description</div>
                         <div class="datagrid-content">{{ $product->description }}</div>
                     </div>

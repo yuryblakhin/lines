@@ -12,9 +12,9 @@ class Warehouse extends Model
     use HasFactory;
 
     protected $fillable = [
-        'currency_id',
         'code',
         'name',
+        'currency_id',
         'address',
         'phones',
         'active',
@@ -25,7 +25,7 @@ class Warehouse extends Model
         'active' => 'boolean',
     ];
 
-    public static array $sortable = ['id', 'currency_id', 'code', 'name', 'created_at', 'updated_at'];
+    public static array $sortable = ['id', 'code', 'name', 'currency_id', 'created_at', 'updated_at'];
 
     public function getPhones(): string
     {

@@ -73,7 +73,6 @@
 
                     <div class="mb-3">
                         <label for="phones" class="form-label">{{ __('Phones') }}</label>
-
                         <div id="phone-inputs-container">
                             @if (is_array(old('phones')))
                                 @foreach (old('phones') as $index => $phone)

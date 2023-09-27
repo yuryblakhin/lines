@@ -14,9 +14,9 @@ return new class extends Migration {
     {
         Schema::create('warehouses', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('currency_id');
             $table->string('name');
             $table->string('code')->unique();
+            $table->unsignedBigInteger('currency_id');
             $table->text('address')->nullable();
             $table->json('phones')->nullable();
             $table->boolean('active')->default(true);

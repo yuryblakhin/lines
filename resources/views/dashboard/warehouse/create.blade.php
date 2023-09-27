@@ -46,7 +46,7 @@
                         <label for="currency_id" class="form-label">{{ __('Currency') }}</label>
                         <select id="currency_id" class="form-select @error('currency_id') is-invalid @enderror" name="currency_id" required>
                             @foreach ($currencies as $item)
-                                <option value="{{ $item->id }}" {{ old('currency') == $item->id ? 'selected' : '' }}>
+                                <option value="{{ $item->id }}" {{ old('currency_id') == $item->id ? 'selected' : '' }}>
                                     {{ $item->name }} ({{ $item->code }})
                                 </option>
                             @endforeach
@@ -72,7 +72,6 @@
 
                     <div class="mb-3">
                         <label for="phones" class="form-label">{{ __('Phones') }}</label>
-
                         <div id="phone-inputs-container">
                             @if (is_array(old('phones')))
                                 @foreach (old('phones') as $index => $phone)
