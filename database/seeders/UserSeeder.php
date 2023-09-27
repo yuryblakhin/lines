@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
 
     public function run()
     {
-        $users = [
+        $usersData = [
             [
                 'first_name' => 'Ivan',
                 'last_name' => 'Ivanov',
@@ -28,9 +28,9 @@ class UserSeeder extends Seeder
             ],
         ];
 
-        foreach ($users as $user) {
-            if (!User::where('email', $user['email'])->first()) {
-                $this->userRepository->storeUser($user);
+        foreach ($usersData as $data) {
+            if (!User::where('email', $data['email'])->exists()) {
+                $this->userRepository->storeUser($data);
             }
         }
     }

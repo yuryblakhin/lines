@@ -11,7 +11,7 @@ class CurrencySeeder extends Seeder
 {
     public function run()
     {
-        $currencies = [
+        $currenciesData = [
             ['code' => 'USD', 'name' => 'United States Dollar'],
             ['code' => 'EUR', 'name' => 'Euro'],
             ['code' => 'GBP', 'name' => 'British Pound Sterling'],
@@ -26,11 +26,8 @@ class CurrencySeeder extends Seeder
             ['code' => 'BYN', 'name' => 'Belarusian Ruble'],
         ];
 
-        foreach ($currencies as $data) {
-            $code = $data['code'];
-
-            // Проверка на уникальность валюты по коду
-            if (!Currency::where('code', $code)->exists()) {
+        foreach ($currenciesData as $data) {
+            if (!Currency::where('code', $data['code'])->exists()) {
                 $currency = new Currency($data);
                 $currency->save();
             }
