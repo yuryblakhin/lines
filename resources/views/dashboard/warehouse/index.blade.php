@@ -9,11 +9,11 @@
                         <tr>
                             <th class="w-1">ID</th>
                             <th>&nbsp;</th>
-                            <th>Code</th>
                             <th>Name</th>
+                            <th>Code</th>
+                            <th>Currency</th>
                             <th>Address</th>
                             <th>Phones</th>
-                            <th>Currency</th>
                             <th>Created At</th>
                             <th>Updated At</th>
                             <th>&nbsp;</th>
@@ -29,11 +29,11 @@
                             <tr>
                                 <td><span class="text-secondary">{{ $warehouse->id }}</span></td>
                                 <td><span class="badge ms-auto {{ $warehouse->getBadgeForActiveStatus() }}"></span></td>
-                                <td>{{ $warehouse->code }}</td>
                                 <td>{{ $warehouse->name }}</td>
+                                <td>{{ $warehouse->code }}</td>
+                                <td>{{ $warehouse->currency->code }}</td>
                                 <td>{{ $warehouse->address }}</td>
                                 <td>{{ $warehouse->getPhones() }}</td>
-                                <td>{{ $warehouse->currency->code }}</td>
                                 <td>{{ $warehouse->created_at }}</td>
                                 <td>{{ $warehouse->updated_at }}</td>
                                 <td>
