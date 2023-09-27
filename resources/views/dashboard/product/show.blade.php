@@ -92,6 +92,7 @@
                         <th>Warehouse</th>
                         <th>Price</th>
                         <th>Quantity</th>
+                        <th>Currency</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -112,6 +113,9 @@
                                 </td>
                                 <td>
                                     <input type="number" class="form-control form-control-sm" name="quantity" value="{{ $pivot ? $pivot->quantity : 0 }}">
+                                </td>
+                                <td>
+                                    {{ $warehouse->currency->code }}
                                 </td>
                                 <td>
                                     <button type="submit" class="btn btn-outline-primary btn-sm">Update</button>

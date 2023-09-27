@@ -25,7 +25,7 @@ class WarehouseRepository implements WarehouseRepositoryContract
             ? SortDirectionEnum::tryFrom($data['sort_direction'])->value ?? 'desc'
             : 'asc';
 
-        return Warehouse::orderBy($sortBy, $sortDirection)
+        return Warehouse::with(['currency'])->orderBy($sortBy, $sortDirection)
             ->paginate($perPage)
             ->withQueryString();
     }

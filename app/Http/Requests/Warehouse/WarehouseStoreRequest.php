@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Warehouse;
 
+use App\Rules\ModelExistsRule;
 use App\Rules\NullableStringRule;
 use App\Rules\Warehouse\WarehouseUniqueCodeRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -35,6 +36,7 @@ class WarehouseStoreRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'code' => ['required', 'string', 'max:255', new WarehouseUniqueCodeRule()],
+            'currency_id' => ['required', new ModelExistsRule(table: 'currencies', column: 'id')],
             'address' => [new NullableStringRule(),  'max:1024'],
             'phones' => ['array'],
             'phones.*' => ['string'],

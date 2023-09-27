@@ -8,6 +8,7 @@ use App\Contracts\Warehouse\WarehouseRepositoryContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Warehouse\WarehouseStoreRequest;
 use App\Http\Requests\Warehouse\WarehouseUpdateRequest;
+use App\Models\Currency;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -65,9 +66,14 @@ class WarehouseController extends Controller
     public function create(Request $request): View|Exception
     {
         try {
+            $currencies = Currency::all();
+
             $this->setTemplate('dashboard.warehouse.create');
             $this->setTitle(__('messages.dashboard.warehouse.create.title'));
             $this->setDescription(__('messages.dashboard.warehouse.create.description'));
+            $this->setTemplateData([
+                'currencies' => $currencies,
+            ]);
 
             return $this->renderTemplate();
         } catch (Throwable $exception) {
@@ -113,11 +119,15 @@ class WarehouseController extends Controller
     {
         try {
             $warehouse = $this->warehouseRepository->findById($warehouseId);
+            $currencies = Currency::all();
 
             $this->setTemplate('dashboard.warehouse.edit');
             $this->setTitle(__('messages.dashboard.warehouse.edit.title'));
             $this->setDescription(__('messages.dashboard.warehouse.edit.description'));
-            $this->setTemplateData(['warehouse' => $warehouse]);
+            $this->setTemplateData([
+                'warehouse' => $warehouse,
+                'currencies' => $currencies,
+            ]);
 
             return $this->renderTemplate();
         } catch (Throwable $exception) {

@@ -43,6 +43,23 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="currency_id" class="form-label">{{ __('Currency') }}</label>
+                        <select id="currency_id" class="form-select @error('currency_id') is-invalid @enderror" name="currency_id" required>
+                            @foreach ($currencies as $item)
+                                <option value="{{ $item->id }}" {{ old('currency') == $item->id ? 'selected' : '' }}>
+                                    {{ $item->name }} ({{ $item->code }})
+                                </option>
+                            @endforeach
+                        </select>
+
+                        @error('currency_id')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
                         <label for="address" class="form-label">{{ __('Address') }}</label>
                         <textarea id="address" class="form-control @error('address') is-invalid @enderror" name="address" required>{{ old('address') }}</textarea>
 

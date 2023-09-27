@@ -118,7 +118,7 @@ class ProductController extends Controller
     {
         try {
             $product = $this->productRepository->findById($productId);
-            $warehouses = Warehouse::all();
+            $warehouses = Warehouse::with(['currency'])->get();
 
             $this->setTemplate('dashboard.product.show');
             $this->setTitle(__('messages.dashboard.product.show.title'));

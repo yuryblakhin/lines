@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Warehouse;
 
+use App\Rules\ModelExistsRule;
 use App\Rules\NullableStringRule;
 use App\Rules\Warehouse\WarehouseUniqueCodeRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -35,6 +36,7 @@ class WarehouseUpdateRequest extends FormRequest
         return [
             'name' => ['sometimes', 'string', 'max:255'],
             'code' => ['sometimes', 'string', 'max:255', new WarehouseUniqueCodeRule(existId: $this->route('warehouse'))],
+            'currency_id' => ['sometimes', new ModelExistsRule(table: 'currencies', column: 'id')],
             'address' => ['sometimes', new NullableStringRule(),  'max:1024'],
             'phones' => ['sometimes', 'array'],
             'phones.*' => ['string'],
