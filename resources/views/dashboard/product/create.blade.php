@@ -43,7 +43,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="sku" class="form-label">{{ __('SKU') }}</label>
+                        <label for="sku" class="form-label">{{ __('SKU owner') }}</label>
                         <input id="sku" type="text" class="form-control @error('sku') is-invalid @enderror" name="sku" value="{{ old('sku') }}" required autocomplete="sku">
 
                         @error('sku')

@@ -58,7 +58,7 @@
                     </div>
 
                     <div class="datagrid-item">
-                        <div class="datagrid-title">SKU</div>
+                        <div class="datagrid-title">SKU owner</div>
                         <div class="datagrid-content">{{ $product->sku }}</div>
                     </div>
 

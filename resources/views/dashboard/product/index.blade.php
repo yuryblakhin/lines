@@ -12,7 +12,7 @@
                             <th>Image</th>
                             <th>Name</th>
                             <th>Code</th>
-                            <th>SKU</th>
+                            <th>SKU owner</th>
                             <th>Categories</th>
                             <th>Created At</th>
                             <th>Updated At</th>
