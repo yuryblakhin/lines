@@ -32,13 +32,6 @@ class User extends Authenticatable
         'active' => 'boolean',
     ];
 
-    protected function email(): Attribute
-    {
-        return Attribute::make(
-            set: fn (string $value) => mb_strtolower($value, 'UTF-8'),
-        );
-    }
-
     protected function password(): Attribute
     {
         return Attribute::make(
