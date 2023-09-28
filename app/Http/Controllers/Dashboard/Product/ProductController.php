@@ -10,6 +10,7 @@ use App\Http\Requests\Product\ProductStoreRequest;
 use App\Http\Requests\Product\ProductUpdateRequest;
 use App\Models\Category;
 use App\Models\Warehouse;
+use App\Services\ProductXmlService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -21,10 +22,14 @@ class ProductController extends Controller
 {
     protected ProductRepositoryContract $productRepository;
 
+    protected ProductXmlService $productXmlService;
+
     public function __construct(
         ProductRepositoryContract $productRepository,
+        ProductXmlService $productXmlService
     ) {
         $this->productRepository = $productRepository;
+        $this->productXmlService = $productXmlService;
     }
 
     /**
@@ -42,11 +47,15 @@ class ProductController extends Controller
         try {
             $data = $request->all();
             $products = $this->productRepository->getAllProducts($data);
+            $xmlFilePath = $this->productXmlService->getXmlFilePath();
 
             $this->setTemplate('dashboard.product.index');
             $this->setTitle(__('messages.dashboard.product.index.title'));
             $this->setDescription(__('messages.dashboard.product.index.description'));
-            $this->setTemplateData(['products' => $products]);
+            $this->setTemplateData([
+                'products' => $products,
+                'xmlFilePath' => $xmlFilePath,
+            ]);
 
             return $this->renderTemplate();
         } catch (Throwable $exception) {
