@@ -63,7 +63,6 @@ class ProductXmlService
                 }
             }
 
-
             $productElement->addChild('active', (string) $product->active);
         }
 
