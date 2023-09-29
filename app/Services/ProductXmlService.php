@@ -54,7 +54,15 @@ class ProductXmlService
                 $categoryElement = $categoriesElement->addChild('category');
                 $categoryElement->addChild('id', (string) $category->id);
                 $categoryElement->addChild('name', $category->name);
+
+                $parents = $category->ancestors()->get();
+                foreach ($parents as $parent) {
+                    $parentElement = $categoryElement->addChild('parent_category');
+                    $parentElement->addChild('id', (string) $parent->id);
+                    $parentElement->addChild('name', $parent->name);
+                }
             }
+
 
             $productElement->addChild('active', (string) $product->active);
         }
