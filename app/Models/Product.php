@@ -15,7 +15,7 @@ class Product extends Model
     protected $fillable = [
         'name',
         'code',
-        'sku',
+        'sku_owner',
         'description',
         'image_path',
         'active',
@@ -25,7 +25,7 @@ class Product extends Model
         'active' => 'boolean',
     ];
 
-    public static array $sortable = ['id', 'name', 'sku', 'code', 'created_at', 'updated_at'];
+    public static array $sortable = ['id', 'name', 'sku_owner', 'code', 'created_at', 'updated_at'];
 
     public function categories(): BelongsToMany
     {

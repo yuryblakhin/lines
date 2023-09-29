@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('code')->unique();
-            $table->text('sku')->nullable();
+            $table->text('sku_owner')->nullable();
             $table->text('description')->nullable();
             $table->string('image_path')->nullable();
             $table->boolean('active')->default(true);

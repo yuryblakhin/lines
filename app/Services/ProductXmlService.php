@@ -26,14 +26,17 @@ class ProductXmlService
     public function createXml($products): void
     {
         $this->createDirectoryIfNotExists();
-        $xml = new SimpleXMLElement('<products/>');
 
+        $xml = new SimpleXMLElement('<root/>');
+        $xml->addChild('created_at', now()->toDateTimeString());
+
+        $productsElement = $xml->addChild('products');
         foreach ($products as $product) {
-            $productElement = $xml->addChild('product');
+            $productElement = $productsElement->addChild('product');
             $productElement->addChild('id', (string) $product->id);
             $productElement->addChild('name', $product->name);
             $productElement->addChild('code', $product->code);
-            $productElement->addChild('sku', $product->sku);
+            $productElement->addChild('sku_owner', $product->sku_owner);
             $productElement->addChild('description', $product->description);
 
             $mainImageElement = $productElement->addChild('main_image');

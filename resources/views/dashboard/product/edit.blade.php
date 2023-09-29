@@ -44,10 +44,10 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="sku" class="form-label">{{ __('SKU owner') }}</label>
-                        <input id="sku" type="text" class="form-control @error('sku') is-invalid @enderror" name="sku" value="{{ old('sku', $product->sku) }}" required autocomplete="sku">
+                        <label for="sku_owner" class="form-label">{{ __('SKU owner') }}</label>
+                        <input id="sku_owner" type="text" class="form-control @error('sku_owner') is-invalid @enderror" name="sku_owner" value="{{ old('sku_owner', $product->sku_owner) }}" required autocomplete="sku_owner">
 
-                        @error('sku')
+                        @error('sku_owner')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>

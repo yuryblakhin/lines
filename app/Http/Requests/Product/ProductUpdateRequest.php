@@ -41,7 +41,7 @@ class ProductUpdateRequest extends FormRequest
         return [
             'name' => ['sometimes', 'string', 'max:255'],
             'code' => ['sometimes', 'string', 'max:255', new ProductUniqueCodeRule(existId: $this->route('product'))],
-            'sku' => ['sometimes', new NullableStringRule(), 'max:255'],
+            'sku_owner' => ['sometimes', new NullableStringRule(), 'max:255'],
             'description' => ['sometimes', new NullableStringRule(), 'max:1024'],
             'image' => ['sometimes', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
             'images' => ['sometimes', 'array'],

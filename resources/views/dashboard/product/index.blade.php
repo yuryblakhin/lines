@@ -33,7 +33,7 @@
                                 <td><img class="avatar avatar-xl" src="{{ $product->getImagePath() }}" alt="{{ $product->name }}"></td>
                                 <td><a href="{{ route('dashboard.product.show', ['product' => $product->id], false) }}">{{ $product->name }}</a></td>
                                 <td>{{ $product->code }}</td>
-                                <td>{{ $product->sku }}</td>
+                                <td>{{ $product->sku_owner }}</td>
                                 <td>{{ $product->getCategoryNames() }}</td>
                                 <td>{{ $product->created_at }}</td>
                                 <td>{{ $product->updated_at }}</td>
