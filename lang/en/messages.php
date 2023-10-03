@@ -108,6 +108,10 @@ return [
             'store' => [
                 'redirect' => 'Warehouse data has been successfully created!'
             ],
+            'show' => [
+                'title' => 'Show Warehouse',
+                'description' => 'Manage your warehouses',
+            ],
             'edit' => [
                 'title' => 'Edit Warehouse',
                 'description' => 'Manage your warehouses',

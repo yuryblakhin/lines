@@ -22,14 +22,14 @@
                     <tbody>
                     @if ($warehouses->isEmpty())
                         <tr>
-                            <td colspan="9">No warehouses found</td>
+                            <td colspan="10">No warehouses found</td>
                         </tr>
                     @else
                         @foreach ($warehouses as $warehouse)
                             <tr>
                                 <td><span class="text-secondary">{{ $warehouse->id }}</span></td>
                                 <td><span class="badge ms-auto {{ $warehouse->getBadgeForActiveStatus() }}"></span></td>
-                                <td>{{ $warehouse->name }}</td>
+                                <td><a href="{{ route('dashboard.warehouse.show', ['warehouse' => $warehouse->id], false) }}">{{ $warehouse->name }}</a></td>
                                 <td>{{ $warehouse->code }}</td>
                                 <td>{{ $warehouse->currency->code }}</td>
                                 <td>{{ $warehouse->address }}</td>

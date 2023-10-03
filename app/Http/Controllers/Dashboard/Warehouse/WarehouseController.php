@@ -105,6 +105,40 @@ class WarehouseController extends Controller
     }
 
     /**
+     * Отображает полную информацию об указанном складе.
+     *
+     * @param Request $request Запрос, содержащий параметры и данные запроса.
+     * @param int $productId Идентификатор склада или объект склада.
+     *
+     * @return View|Exception Представление для отображения страницы с информацией о складе
+     * или исключение, если возникла ошибка.
+     *
+     * @throws Exception Если возникла ошибка при выполнении операции.
+     */
+    public function show(Request $request, int $productId): View|Exception
+    {
+        try {
+            $warehouse = $this->warehouseRepository->findById($productId);
+            $products = $warehouse->products()
+                ->wherePivot('price', '>', 0)
+                ->withPivot('quantity', 'price')
+                ->get();
+
+            $this->setTemplate('dashboard.warehouse.show');
+            $this->setTitle(__('messages.dashboard.warehouse.show.title'));
+            $this->setDescription(__('messages.dashboard.warehouse.show.description'));
+            $this->setTemplateData([
+                'warehouse' => $warehouse,
+                'products' => $products,
+            ]);
+
+            return $this->renderTemplate();
+        } catch (Throwable $exception) {
+            throw new Exception($exception->getMessage(), $exception->getCode(), $exception);
+        }
+    }
+
+    /**
      * Отображает страницу с информацией о складе.
      *
      * @param Request $request Запрос, содержащий параметры и данные запроса.
